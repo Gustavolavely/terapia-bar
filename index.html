@@ -211,10 +211,16 @@ async function renderMenu(cat = currentCat) {
   currentCat = cat;
   document.querySelectorAll(".menu-tabs button").forEach(b => b.classList.toggle("active", b.dataset.cat === cat));
   const {data, error} = await db.from("menu_items").select("id,name,description,price,category,position,active").eq("active", true).eq("category", cat).order("position", {ascending:true});
-  if (error || !data || data.length === 0) {
-    $("#menuList").innerHTML = fallbackMenu(cat);
-    return;
-  }
+ if (error) {
+  $("#menuList").innerHTML = "<p>Não foi possível carregar o cardápio.</p>";
+  console.error("Erro ao carregar cardápio:", error);
+  return;
+}
+
+if (!data || data.length === 0) {
+  $("#menuList").innerHTML = "<p>Nenhum produto cadastrado nesta categoria.</p>";
+  return;
+}
   $("#menuList").innerHTML = data.map(i => `<div class="menu-item"><div><h3>${esc(i.name)}</h3><p>${esc(i.description)}</p></div><div class="price">${esc(i.price)}</div></div>`).join("");
 }
 document.querySelectorAll(".menu-tabs button").forEach(b => b.addEventListener("click", () => renderMenu(b.dataset.cat)));
