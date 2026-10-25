@@ -255,7 +255,7 @@ $("#reservationForm").addEventListener("submit", async e => {
     notice.style.borderColor = "#8a4b42";
     notice.style.background = "#2b1b19";
   } else {
-    e.currentTarget.reset();
+    document.querySelector("#menuForm").reset();
     dateInput.min = new Date().toISOString().slice(0,10);
     notice.style.borderColor = "#53734d";
     notice.style.background = "#1b2a1a";
