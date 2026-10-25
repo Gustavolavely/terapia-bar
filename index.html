@@ -353,13 +353,14 @@ async function loadAdminMenu() {
   const {data, error} = await db.from("menu_items").select("*").order("position", {ascending:true});
   if (error) { $("#adminMenuList").innerHTML = '<p class="empty">Erro ao carregar o cardápio.</p>'; return; }
   menuRows = data || [];
-  $("#adminMenuList").innerHTML = menuRows.length ? menuRows.map(i => `<div class="reservation-row"><strong>${esc(i.name)}</strong> · ${esc(i.price)} · ${esc(i.category)} · ${i.active ? "Ativo" : "Oculto"}<p class="small-note">${esc(i.description || "")}</p><div class="row-actions"><button class="btn btn-outline" onclick="editMenuItem(${Number(i.id)})">Editar</button><button class="btn btn-outline" onclick="toggleMenuItem(${Number(i.id)},${!i.active})">${i.active ? "Ocultar" : "Ativar"}</button><button class="btn danger" onclick="deleteMenuItem(${Number(i.id)})">Excluir</button></div></div>`).join("") : '<p class="empty">Ainda não há itens cadastrados no banco. O site exibirá os itens de exemplo até você cadastrar os reais.</p>';
+  $("#adminMenuList").innerHTML = menuRows.length ? menuRows.map(i => `<div class="reservation-row"><strong>${esc(i.name)}</strong> · ${esc(i.price)} · ${esc(i.category)} · ${i.active ? "Ativo" : "Oculto"}<p class="small-note">${esc(i.description || "")}</p><div class="row-actions"><button class="btn btn-outline" onclick="editMenuItem(${Number(i.id)})">Editar</button><button class="btn btn-outline" onclick="toggleMenuItem(${Number(i.id)},${!i.active})">${i.active ? "Ocultar" : "Ativar"}</button><button class="btn danger" onclick="deleteMenuItem(${Number(i.id)})">Excluir</button></div></div>`).join("") : '<p class="empty">Ainda não há produtos cadastrados no cardápio.</p>';
 }
 $("#menuForm").addEventListener("submit", async e => {
   e.preventDefault();
   if (!adminLoggedIn) return;
   const id = $("#menuId").value;
-  const item = {name:$("#menuName").value.trim(),description:$("#menuDescription").value.trim(),price:$("#menuPrice").value.trim(),category:$("#menuCategory").value,active:true,position:menuRows.length + 1};
+  const item = {name:$("#menuName").value.trim(),description:$("#menuDescription").value.trim(),price:$("#menuPrice").value.trim(),category:$("#menuCategory").value,position:menuRows.length + 1};
+  if (!id) item.active = true;
   const result = id ? await db.from("menu_items").update(item).eq("id", Number(id)) : await db.from("menu_items").insert(item);
   if (result.error) { alert("Não foi possível salvar o item. Confira as permissões do Supabase."); return; }
   e.currentTarget.reset();
