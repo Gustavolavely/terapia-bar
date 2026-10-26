@@ -935,8 +935,8 @@
                <div class="field"><label for="name">Nome completo *</label><input id="name" name="name" required
                 placeholder="Seu nome"></div>
 
-               <div class="field"><label for="phone">Telefone *</label><input id="phone" name="phone" required
-                type="tel" placeholder="(11) 99999-9999"></div>
+               <div class="field"><label for="phone">Número de WhatsApp *</label><input id="phone" name="phone" required
+                type="tel" inputmode="tel" placeholder="(11) 99999-9999"></div>
 
                <div class="field"><label for="date">Data *</label><input id="date" name="date" type="date" required>
             </div>
@@ -1227,8 +1227,18 @@
         return;
       }
       const filtered = (data || []).filter(r => [r.name, r.phone, r.reservation_date, r.reservation_time, r.reservation_type, r.status].join(" ").toLowerCase().includes(q));
-      $("#reservationList").innerHTML = filtered.length ? filtered.map(r => `<div class="reservation-row"><strong>${esc(r.name)}</strong> · ${esc(r.status)}<p class="small-note">📅 ${esc(r.reservation_date)} às ${esc(String(r.reservation_time || "").slice(0, 5))} · 👥 ${esc(r.people)} · ${esc(r.reservation_type)}<br>☎ ${esc(r.phone)}${r.notes ? `<br>Observações: ${esc(r.notes)}` : ""}</p><div class="row-actions"><button class="btn btn-outline" onclick="setStatus(${Number(r.id)},'Confirmada')">Marcar confirmada</button><button class="btn btn-outline" onclick="setStatus(${Number(r.id)},'Cancelada')">Cancelar</button><button class="btn danger" onclick="deleteReservation(${Number(r.id)})">Excluir</button></div></div>`).join("") : '<p class="empty">Nenhuma reserva encontrada.</p>';
+      $("#reservationList").innerHTML = filtered.length ? filtered.map(r => `<div class="reservation-row"><strong>${esc(r.name)}</strong> · ${esc(r.status)}<p class="small-note">📅 ${esc(r.reservation_date)} às ${esc(String(r.reservation_time || "").slice(0, 5))} · 👥 ${esc(r.people)} · ${esc(r.reservation_type)}<br>📱 WhatsApp: ${esc(r.phone)}${r.notes ? `<br>Observações: ${esc(r.notes)}` : ""}</p><div class="row-actions"><button class="btn btn-outline" onclick="openReservationWhatsApp('${String(r.phone || "").replace(/\D/g, "")}')">Chamar no WhatsApp</button><button class="btn btn-outline" onclick="setStatus(${Number(r.id)},'Confirmada')">Marcar confirmada</button><button class="btn btn-outline" onclick="setStatus(${Number(r.id)},'Cancelada')">Cancelar</button><button class="btn danger" onclick="deleteReservation(${Number(r.id)})">Excluir</button></div></div>`).join("") : '<p class="empty">Nenhuma reserva encontrada.</p>';
     }
+    window.openReservationWhatsApp = phone => {
+      let number = String(phone || "").replace(/\D/g, "");
+      if (number.length === 10 || number.length === 11) number = "55" + number;
+      if (number.length < 12 || number.length > 13 || !number.startsWith("55")) {
+        alert("Confira o número de WhatsApp desta reserva. Informe o DDD e o número completo.");
+        return;
+      }
+      window.open("https://wa.me/" + number, "_blank", "noopener,noreferrer");
+    };
+
     window.setStatus = async (id, status) => {
       if (!adminLoggedIn) return;
       const { error } = await db.from("reservations").update({ status }).eq("id", id);
