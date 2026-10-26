@@ -4,502 +4,1403 @@
 
 <head>
 
-<meta charset="UTF-8">
+  <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="theme-color" content="#111111">
+  <meta name="theme-color" content="#111111">
 
-<meta name="description" content="TERAPIA Bar — bons drinks, música e momentos para esquecer a rotina. Confira o cardápio e reserve sua mesa.">
+  <meta name="description"
+    content="TERAPIA Bar — bons drinks, música e momentos para esquecer a rotina. Confira o cardápio e reserve sua mesa.">
 
-<title>TERAPIA Bar | Seu refúgio da rotina</title>
+  <title>TERAPIA Bar | Seu refúgio da rotina</title>
 
-<style>
+  <style>
+    :root {
+      --bg: #101010;
+      --panel: #191919;
+      --cream: #f2eee5;
+      --muted: #b9b2a6;
+      --accent: #d7a65b;
+      --accent2: #f0c980;
+      --line: #34312c
+    }
 
-:root{--bg:#101010;--panel:#191919;--cream:#f2eee5;--muted:#b9b2a6;--accent:#d7a65b;--accent2:#f0c980;--line:#34312c}
+    * {
+      box-sizing: border-box
+    }
 
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--cream);font-family:Arial,Helvetica,sans-serif}a{color:inherit;text-decoration:none}button,input,select,textarea{font:inherit}button,.btn{cursor:pointer;border:0;border-radius:5px;padding:13px 18px;font-weight:700;display:inline-block}.btn-primary{background:var(--accent);color:#17130d}.btn-primary:hover{background:var(--accent2)}.btn-outline{border:1px solid #8b7755;color:var(--cream);background:transparent}.wrap{width:min(1120px,92%);margin:auto}.eyebrow{text-transform:uppercase;letter-spacing:3px;color:var(--accent);font-size:12px;font-weight:700}.topbar{padding:13px 0;border-bottom:1px solid #292723;background:#0c0c0c;font-size:13px;color:var(--muted)}.topbar .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0;gap:20px}.brand{font-size:27px;font-weight:900;letter-spacing:5px}.brand span{color:var(--accent)}.navlinks{display:flex;gap:23px;font-size:14px;color:#ded8ce}.navlinks a:hover{color:var(--accent)}.hero{min-height:590px;display:flex;align-items:center;position:relative;overflow:hidden;background:linear-gradient(90deg,rgba(8,8,8,.95),rgba(8,8,8,.68) 55%,rgba(8,8,8,.2)),url('https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1800&q=85') center/cover}.hero:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(0deg,var(--bg),transparent 22%,transparent 80%,var(--bg))}.hero-content{position:relative;z-index:1;max-width:650px;padding:70px 0}.hero h1{font-family:Georgia,serif;font-size:clamp(48px,7vw,83px);line-height:.98;margin:17px 0 22px;font-weight:500}.hero h1 em{font-weight:400;color:var(--accent);display:block}.hero p{color:#d0cbc2;font-size:17px;line-height:1.7;max-width:520px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}.section{padding:76px 0}.section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:30px}.section h2{font:500 clamp(32px,4vw,47px)/1.1 Georgia,serif;margin:10px 0}.section-intro{color:var(--muted);line-height:1.7;max-width:590px}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.card{background:var(--panel);border:1px solid var(--line);border-radius:7px;overflow:hidden}.card img{width:100%;height:205px;object-fit:cover;display:block}.card-body{padding:21px}.card h3{font:500 24px Georgia,serif;margin:0 0 10px}.card p{color:var(--muted);font-size:14px;line-height:1.6;margin:0 0 15px}.price{color:var(--accent);font-weight:800}.menu-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:24px 0}.menu-tabs button{background:#222;color:var(--muted);border:1px solid #37332c}.menu-tabs button.active{background:var(--accent);color:#111}.menu-list{display:grid;grid-template-columns:1fr 1fr;gap:0 34px}.menu-item{display:flex;justify-content:space-between;gap:15px;padding:18px 0;border-bottom:1px solid var(--line)}.menu-item h3{font-size:16px;margin:0 0 6px}.menu-item p{font-size:13px;color:var(--muted);margin:0;line-height:1.5}.menu-item .price{white-space:nowrap}.gallery{position:relative;display:flex;align-items:center;gap:0;overflow:hidden;border-radius:8px;background:#111;min-height:260px}.slide{position:relative;display:none;flex:0 0 100%;width:100%;height:clamp(260px,48vw,520px);min-height:260px;border-radius:8px;overflow:hidden;background:#24211b}.slide.active{display:block}.slide img{position:absolute;inset:0;width:100%;height:100%;min-height:0;object-fit:cover;display:block;transition:transform .5s}.slide:hover img{transform:scale(1.02)}.slide-label{position:absolute;bottom:0;left:0;right:0;padding:45px 20px 20px;background:linear-gradient(transparent,rgba(0,0,0,.8));font-weight:700;font-size:16px}.gallery-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:44px;height:44px;padding:0;border-radius:50%;background:rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.5);color:#fff;font-size:25px;display:flex;align-items:center;justify-content:center}.gallery-arrow:hover{background:var(--accent);color:#111}.gallery-prev{left:14px}.gallery-next{right:14px}.gallery-dots{display:flex;justify-content:center;gap:9px;margin-top:16px}.gallery-dot{width:9px;height:9px;padding:0;border-radius:50%;background:#625c50;display:block}.gallery-dot.active{background:var(--accent);transform:scale(1.2)}@media(max-width:760px){.gallery{min-height:240px}.slide{height:280px;min-height:240px}.gallery-arrow{width:38px;height:38px;font-size:21px}.gallery-prev{left:9px}.gallery-next{right:9px}}.slide-label{position:absolute;bottom:0;left:0;right:0;padding:24px 16px 15px;background:linear-gradient(transparent,rgba(0,0,0,.8));font-weight:700}.reserve-grid{display:grid;grid-template-columns:1fr;gap:24px;align-items:start}.formbox{order:-1}.reserve-copy{background:linear-gradient(145deg,#211d16,#131313);padding:30px;border:1px solid #40372a;border-radius:8px}.reserve-copy h3{font:500 30px Georgia,serif;margin:10px 0}.reserve-copy p,.small-note{color:var(--muted);line-height:1.7;font-size:14px}.formbox{background:var(--panel);padding:28px;border:1px solid var(--line);border-radius:8px}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.field{display:flex;flex-direction:column;gap:7px;margin-bottom:15px}.field.full{grid-column:1/-1}.field label{font-size:12px;color:#d8cdb9;font-weight:700}.field input,.field select,.field textarea{width:100%;padding:13px;background:#101010;border:1px solid #454039;color:var(--cream);border-radius:4px;outline:none}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent)}.field textarea{min-height:85px;resize:vertical}.notice{display:none;padding:13px;border:1px solid #53734d;background:#1b2a1a;color:#d7f0d0;border-radius:5px;margin-top:14px;font-size:14px;line-height:1.5}.socials{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}.socials a{padding:11px 14px;border:1px solid #484035;border-radius:5px;color:var(--cream);font-size:14px}.socials a:hover{border-color:var(--accent);color:var(--accent)}.footer{padding:35px 0;border-top:1px solid var(--line);color:var(--muted);font-size:13px}.footer .wrap{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}.admin-launch{position:fixed;right:18px;bottom:18px;z-index:5;background:#24211d;color:#e8d6b5;border:1px solid #65543b;border-radius:50px;padding:11px 15px;font-size:12px}.modal{display:none;position:fixed;inset:0;z-index:20;background:rgba(0,0,0,.82);padding:20px;overflow:auto;align-items:center;justify-content:center}.modal.open{display:flex}.modal-box{width:min(800px,100%);background:#171717;border:1px solid #51432f;border-radius:8px;padding:26px;max-height:90vh;overflow:auto}.modal-top{display:flex;justify-content:space-between;align-items:center;gap:12px}.modal-top h2{font:500 29px Georgia,serif;margin:0}.close{background:#2a2927;color:white;padding:8px 12px}.admin-content{display:none}.reservation-row{border:1px solid var(--line);border-radius:6px;padding:15px;margin:12px 0;background:#111}.reservation-row strong{color:var(--accent)}.row-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.row-actions button{padding:8px 10px;font-size:12px}.admin-tools{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.admin-tools input{flex:1;min-width:180px;padding:11px;background:#101010;color:white;border:1px solid #444}.empty{color:var(--muted);padding:20px 0}.danger{background:#552b25;color:#fff}.muted{color:var(--muted)}@media(max-width:760px){.nav{align-items:flex-start;flex-direction:column}.navlinks{gap:15px;flex-wrap:wrap}.hero{min-height:540px}.cards{grid-template-columns:1fr}.section{padding:55px 0}.section-head{display:block}.menu-list{grid-template-columns:1fr}.gallery{grid-template-columns:1fr 1fr}.slide:first-child{grid-row:auto;grid-column:1/-1}.slide:first-child img{min-height:250px}.reserve-grid{grid-template-columns:1fr;gap:20px}.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}.topbar .wrap{display:block}.topbar .wrap span{display:block;margin:4px 0}}
+    html {
+      scroll-behavior: smooth
+    }
 
-</style>
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--cream);
+      font-family: Arial, Helvetica, sans-serif
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit
+    }
+
+    button,
+    .btn {
+      cursor: pointer;
+      border: 0;
+      border-radius: 5px;
+      padding: 13px 18px;
+      font-weight: 700;
+      display: inline-block
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #17130d
+    }
+
+    .btn-primary:hover {
+      background: var(--accent2)
+    }
+
+    .btn-outline {
+      border: 1px solid #8b7755;
+      color: var(--cream);
+      background: transparent
+    }
+
+    .wrap {
+      width: min(1120px, 92%);
+      margin: auto
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700
+    }
+
+    .topbar {
+      padding: 13px 0;
+      border-bottom: 1px solid #292723;
+      background: #0c0c0c;
+      font-size: 13px;
+      color: var(--muted)
+    }
+
+    .topbar .wrap {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 0;
+      gap: 20px
+    }
+
+    .brand {
+      font-size: 27px;
+      font-weight: 900;
+      letter-spacing: 5px
+    }
+
+    .brand span {
+      color: var(--accent)
+    }
+
+    .navlinks {
+      display: flex;
+      gap: 23px;
+      font-size: 14px;
+      color: #ded8ce
+    }
+
+    .navlinks a:hover {
+      color: var(--accent)
+    }
+
+    .hero {
+      min-height: 590px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(90deg, rgba(8, 8, 8, .95), rgba(8, 8, 8, .68) 55%, rgba(8, 8, 8, .2)), url('https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1800&q=85') center/cover
+    }
+
+    .hero:after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(0deg, var(--bg), transparent 22%, transparent 80%, var(--bg))
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 650px;
+      padding: 70px 0
+    }
+
+    .hero h1 {
+      font-family: Georgia, serif;
+      font-size: clamp(48px, 7vw, 83px);
+      line-height: .98;
+      margin: 17px 0 22px;
+      font-weight: 500
+    }
+
+    .hero h1 em {
+      font-weight: 400;
+      color: var(--accent);
+      display: block
+    }
+
+    .hero p {
+      color: #d0cbc2;
+      font-size: 17px;
+      line-height: 1.7;
+      max-width: 520px
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 28px
+    }
+
+    .section {
+      padding: 76px 0
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 30px
+    }
+
+    .section h2 {
+      font: 500 clamp(32px, 4vw, 47px)/1.1 Georgia, serif;
+      margin: 10px 0
+    }
+
+    .section-intro {
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 590px
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      overflow: hidden
+    }
+
+    .card img {
+      width: 100%;
+      height: 205px;
+      object-fit: cover;
+      display: block
+    }
+
+    .card-body {
+      padding: 21px
+    }
+
+    .card h3 {
+      font: 500 24px Georgia, serif;
+      margin: 0 0 10px
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+      margin: 0 0 15px
+    }
+
+    .price {
+      color: var(--accent);
+      font-weight: 800
+    }
+
+    .menu-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 24px 0
+    }
+
+    .menu-tabs button {
+      background: #222;
+      color: var(--muted);
+      border: 1px solid #37332c
+    }
+
+    .menu-tabs button.active {
+      background: var(--accent);
+      color: #111
+    }
+
+    .menu-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 34px
+    }
+
+    .menu-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--line)
+    }
+
+    .menu-item h3 {
+      font-size: 16px;
+      margin: 0 0 6px
+    }
+
+    .menu-item p {
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.5
+    }
+
+    .menu-item .price {
+      white-space: nowrap
+    }
+
+    .gallery {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      overflow: hidden;
+      border-radius: 8px;
+      background: #111;
+      min-height: 260px
+    }
+
+    .slide {
+      position: relative;
+      display: none;
+      flex: 0 0 100%;
+      width: 100%;
+      height: clamp(260px, 48vw, 520px);
+      min-height: 260px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #24211b
+    }
+
+    .slide.active {
+      display: block
+    }
+
+    .slide img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      object-fit: cover;
+      display: block;
+      transition: transform .5s
+    }
+
+    .slide:hover img {
+      transform: scale(1.02)
+    }
+
+    .slide-label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 45px 20px 20px;
+      background: linear-gradient(transparent, rgba(0, 0, 0, .8));
+      font-weight: 700;
+      font-size: 16px
+    }
+
+    .gallery-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 3;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, .7);
+      border: 1px solid rgba(255, 255, 255, .5);
+      color: #fff;
+      font-size: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .gallery-arrow:hover {
+      background: var(--accent);
+      color: #111
+    }
+
+    .gallery-prev {
+      left: 14px
+    }
+
+    .gallery-next {
+      right: 14px
+    }
+
+    .gallery-dots {
+      display: flex;
+      justify-content: center;
+      gap: 9px;
+      margin-top: 16px
+    }
+
+    .gallery-dot {
+      width: 9px;
+      height: 9px;
+      padding: 0;
+      border-radius: 50%;
+      background: #625c50;
+      display: block
+    }
+
+    .gallery-dot.active {
+      background: var(--accent);
+      transform: scale(1.2)
+    }
+
+    @media(max-width:760px) {
+      .gallery {
+        min-height: 240px
+      }
+
+      .slide {
+        height: 280px;
+        min-height: 240px
+      }
+
+      .gallery-arrow {
+        width: 38px;
+        height: 38px;
+        font-size: 21px
+      }
+
+      .gallery-prev {
+        left: 9px
+      }
+
+      .gallery-next {
+        right: 9px
+      }
+    }
+
+    .slide-label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 24px 16px 15px;
+      background: linear-gradient(transparent, rgba(0, 0, 0, .8));
+      font-weight: 700
+    }
+
+    .reserve-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      align-items: start
+    }
+
+    .formbox {
+      order: -1
+    }
+
+    .reserve-copy {
+      background: linear-gradient(145deg, #211d16, #131313);
+      padding: 30px;
+      border: 1px solid #40372a;
+      border-radius: 8px
+    }
+
+    .reserve-copy h3 {
+      font: 500 30px Georgia, serif;
+      margin: 10px 0
+    }
+
+    .reserve-copy p,
+    .small-note {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 14px
+    }
+
+    .formbox {
+      background: var(--panel);
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 8px
+    }
+
+    .formgrid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      margin-bottom: 15px
+    }
+
+    .field.full {
+      grid-column: 1/-1
+    }
+
+    .field label {
+      font-size: 12px;
+      color: #d8cdb9;
+      font-weight: 700
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 13px;
+      background: #101010;
+      border: 1px solid #454039;
+      color: var(--cream);
+      border-radius: 4px;
+      outline: none
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: var(--accent)
+    }
+
+    .field textarea {
+      min-height: 85px;
+      resize: vertical
+    }
+
+    .notice {
+      display: none;
+      padding: 13px;
+      border: 1px solid #53734d;
+      background: #1b2a1a;
+      color: #d7f0d0;
+      border-radius: 5px;
+      margin-top: 14px;
+      font-size: 14px;
+      line-height: 1.5
+    }
+
+    .socials {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 20px
+    }
+
+    .socials a {
+      padding: 11px 14px;
+      border: 1px solid #484035;
+      border-radius: 5px;
+      color: var(--cream);
+      font-size: 14px
+    }
+
+    .socials a:hover {
+      border-color: var(--accent);
+      color: var(--accent)
+    }
+
+    .footer {
+      padding: 35px 0;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px
+    }
+
+    .footer .wrap {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      flex-wrap: wrap
+    }
+
+    .admin-launch {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 5;
+      background: #24211d;
+      color: #e8d6b5;
+      border: 1px solid #65543b;
+      border-radius: 50px;
+      padding: 11px 15px;
+      font-size: 12px
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      background: rgba(0, 0, 0, .82);
+      padding: 20px;
+      overflow: auto;
+      align-items: center;
+      justify-content: center
+    }
+
+    .modal.open {
+      display: flex
+    }
+
+    .modal-box {
+      width: min(800px, 100%);
+      background: #171717;
+      border: 1px solid #51432f;
+      border-radius: 8px;
+      padding: 26px;
+      max-height: 90vh;
+      overflow: auto
+    }
+
+    .modal-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px
+    }
+
+    .modal-top h2 {
+      font: 500 29px Georgia, serif;
+      margin: 0
+    }
+
+    .close {
+      background: #2a2927;
+      color: white;
+      padding: 8px 12px
+    }
+
+    .admin-content {
+      display: none
+    }
+
+    .reservation-row {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 15px;
+      margin: 12px 0;
+      background: #111
+    }
+
+    .reservation-row strong {
+      color: var(--accent)
+    }
+
+    .row-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px
+    }
+
+    .row-actions button {
+      padding: 8px 10px;
+      font-size: 12px
+    }
+
+    .admin-tools {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 18px 0
+    }
+
+    .admin-tools input {
+      flex: 1;
+      min-width: 180px;
+      padding: 11px;
+      background: #101010;
+      color: white;
+      border: 1px solid #444
+    }
+
+    .empty {
+      color: var(--muted);
+      padding: 20px 0
+    }
+
+    .danger {
+      background: #552b25;
+      color: #fff
+    }
+
+    .muted {
+      color: var(--muted)
+    }
+
+    @media(max-width:760px) {
+      .nav {
+        align-items: flex-start;
+        flex-direction: column
+      }
+
+      .navlinks {
+        gap: 15px;
+        flex-wrap: wrap
+      }
+
+      .hero {
+        min-height: 540px
+      }
+
+      .cards {
+        grid-template-columns: 1fr
+      }
+
+      .section {
+        padding: 55px 0
+      }
+
+      .section-head {
+        display: block
+      }
+
+      .menu-list {
+        grid-template-columns: 1fr
+      }
+
+      .gallery {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .slide:first-child {
+        grid-row: auto;
+        grid-column: 1/-1
+      }
+
+      .slide:first-child img {
+        min-height: 250px
+      }
+
+      .reserve-grid {
+        grid-template-columns: 1fr;
+        gap: 20px
+      }
+
+      .formgrid {
+        grid-template-columns: 1fr
+      }
+
+      .field.full {
+        grid-column: auto
+      }
+
+      .topbar .wrap {
+        display: block
+      }
+
+      .topbar .wrap span {
+        display: block;
+        margin: 4px 0
+      }
+    }
+  </style>
 
 </head>
 
 <body>
 
-<div class="topbar"><div class="wrap"><span>✦ TERAPIA BAR · seu refúgio da rotina</span><span>Reservas online · Dúvidas: (11) 98816-8222</span></div></div>
+  <div class="topbar">
+    <div class="wrap"><span>✦ TERAPIA BAR · seu refúgio da rotina</span><span>Reservas online · Dúvidas: (11)
+        98816-8222</span></div>
+  </div>
 
-<header class="wrap nav">
+  <header class="wrap nav">
 
-  <a class="brand" href="#inicio">TERAPIA<span>.</span></a>
+      <a class="brand" href="#inicio">TERAPIA<span>.</span></a>
 
-  <nav class="navlinks"><a href="#experiencia">A experiência</a><a href="#cardapio">Cardápio</a><a href="#galeria">Galeria</a><a href="#reservas">Reservas</a></nav>
+      <nav class="navlinks"><a href="#experiencia">A experiência</a><a href="#cardapio">Cardápio</a><a
+        href="#galeria">Galeria</a><a href="#reservas">Reservas</a></nav>
 
-  <a class="btn btn-primary" href="#reservationForm" onclick="event.preventDefault(); const target=document.getElementById('reservationForm'); requestAnimationFrame(() => requestAnimationFrame(() => target.scrollIntoView({behavior:'instant', block:'start'})));">Reservar agora</a>
+    <a class="btn btn-primary" href="#reservationForm"
+      onclick="event.preventDefault(); const target=document.getElementById('reservationForm'); requestAnimationFrame(() => requestAnimationFrame(() => target.scrollIntoView({behavior:'instant', block:'start'})));">Reservar
+      agora</a>
 
-</header>
-
-<main>
-
-<section class="hero" id="inicio"><div class="wrap"><div class="hero-content">
-
-  <div class="eyebrow">Esqueça a rotina. Viva a noite.</div>
-
-  <h1>Tem dias que pedem<br><em>TERAPIA.</em></h1>
-
-  <p>Um bom drink, música boa, gente querida e histórias que começam aqui. Seu lugar para relaxar, brindar e aproveitar o momento.</p>
-
-  <div class="actions"><a class="btn btn-primary" href="#reservas">Faça sua reserva ↗</a><a class="btn btn-outline" href="#cardapio">Explorar cardápio</a></div>
-
-</div></div></section>
-
-<section class="section wrap" id="experiencia">
-
- <div class="section-head"><div><div class="eyebrow">Mais que um bar</div><h2>A noite merece um lugar especial.</h2></div><p class="section-intro">Chegue para tomar uma, fique pela vibe. No TERAPIA, cada detalhe é um convite para sair do automático e curtir de verdade.</p></div>
-
- <div class="cards">
-
-  <article class="card"><img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=900&q=80" alt="Drinks preparados no bar"><div class="card-body"><h3>Drinks de respeito</h3><p>Clássicos, combinações refrescantes e aquele brinde que melhora qualquer noite.</p></div></article>
-
-  <article class="card"><img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=900&q=80" alt="Ambiente de música e diversão"><div class="card-body"><h3>Vibe lá em cima</h3><p>Um ambiente feito para conversar, comemorar e aproveitar cada momento.</p></div></article>
-
-  <article class="card"><img src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=900&q=80" alt="Amigos reunidos em uma noite especial"><div class="card-body"><h3>Momentos juntos</h3><p>Chame a galera, comemore uma data ou transforme uma noite comum em lembrança boa.</p></div></article>
-
- </div>
-
-</section>
-
-<section class="section" id="cardapio" style="background:#151515"><div class="wrap">
-
- <div class="eyebrow">Feito para brindar</div><h2>Cardápio da casa</h2><p class="section-intro">Confira algumas sugestões. Os itens e preços abaixo são exemplos editáveis — personalize com o cardápio real do TERAPIA.</p>
-
- <div class="menu-tabs"><button class="active" data-cat="drinks">Drinks</button><button data-cat="cervejas">Cervejas</button><button data-cat="comidas">Para comer</button><button data-cat="combos">Combos</button></div>
-
- <div class="menu-list" id="menuList"></div>
-
-</div></section>
-
-<section class="section wrap" id="galeria">
-
- <div class="section-head"><div><div class="eyebrow">Um pouco da nossa vibe</div><h2>O TERAPIA em imagens</h2></div><p class="section-intro">Troque estas fotos pelas imagens do seu bar. No painel do proprietário você pode adicionar fotos e elas ficam salvas neste navegador.</p></div>
-
- <div class="gallery" id="gallery">
-  <button class="gallery-arrow gallery-prev" id="galleryPrev" type="button" aria-label="Foto anterior">&#10094;</button>
-  <button class="gallery-arrow gallery-next" id="galleryNext" type="button" aria-label="Próxima foto">&#10095;</button>
-
-  <div class="slide"><img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1000&q=85" alt="Interior de bar"><div class="slide-label">Seu próximo rolê começa aqui</div></div>
-
-  <div class="slide"><img src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=800&q=80" alt="Drink colorido"><div class="slide-label">Drinks & brindes</div></div>
-
-  <div class="slide"><img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=800&q=80" alt="Pista e música"><div class="slide-label">Música boa</div></div>
-
-  <div class="slide"><img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=800&q=80" alt="Amigos à mesa"><div class="slide-label">Gente querida</div></div>
-
-  <div class="slide"><img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=800&q=80" alt="Comida servida"><div class="slide-label">Sabor de casa</div></div>
-
- </div>
- <div class="gallery-dots" id="galleryDots" aria-label="Escolher foto"></div>
-
-
-</section>
-
-<section class="section" id="reservas" style="background:#151515"><div class="wrap reserve-grid">
-
- <div class="reserve-copy"><div class="eyebrow">Garanta seu lugar</div><h3>Reserva feita sem complicação.</h3><p>Preencha os dados e envie sua solicitação. A reserva ficará registrada no sistema do site para os responsáveis consultarem. Aguarde a confirmação do bar antes de considerar a reserva confirmada.</p><p>Precisa tirar uma dúvida? Fale com a gente pelo WhatsApp.</p><a class="btn btn-outline" target="_blank" rel="noopener" href="https://wa.me/5511988168222?text=Ol%C3%A1%2C%20tenho%20uma%20d%C3%BAvida%20sobre%20o%20TERAPIA%20Bar.">Tirar dúvida no WhatsApp ↗</a>
-
- <div class="socials"><a target="_blank" rel="noopener" href="https://www.instagram.com/terapiiabar/?obrf=MXZyMm4ydjNyNXI4bg==">Instagram ↗</a><a target="_blank" rel="noopener" href="https://www.tiktok.com/@terapiiabar?_r=1&_t=ZS-9AqLkmHDoAh">TikTok ↗</a></div>
-
- </div>
-
- <form class="formbox" id="reservationForm"><div class="eyebrow">Solicitar reserva</div><h2 style="font-size:29px">Quem vem com você?</h2>
-
-  <div class="formgrid">
-
-   <div class="field"><label for="name">Nome completo *</label><input id="name" name="name" required placeholder="Seu nome"></div>
-
-   <div class="field"><label for="phone">Telefone *</label><input id="phone" name="phone" required type="tel" placeholder="(11) 99999-9999"></div>
-
-   <div class="field"><label for="date">Data *</label><input id="date" name="date" type="date" required></div>
-
-   <div class="field"><label for="time">Horário desejado *</label><input id="time" name="time" type="time" required></div>
-
-   <div class="field"><label for="people">Quantidade de pessoas *</label><select id="people" name="people" required><option value="">Selecione</option><option>1 pessoa</option><option>2 pessoas</option><option>3 pessoas</option><option>4 pessoas</option><option>5 pessoas</option><option>6 pessoas</option><option>7 pessoas</option><option>8 pessoas</option><option>9 pessoas</option><option>10 pessoas</option><option>Mais de 10 pessoas</option></select></div>
-
-   
-
-   <div class="field full"><label for="notes">Observações (opcional)</label><textarea id="notes" name="notes" placeholder="Alguma preferência ou ocasião especial?"></textarea></div>
-
-  </div><button class="btn btn-primary" type="submit" style="width:100%">Enviar solicitação de reserva ↗</button>
-
-  <p class="small-note">Ao enviar, sua solicitação será enviada ao sistema do TERAPIA Bar. A reserva só estará confirmada após retorno do estabelecimento.</p>
-
-  <div class="notice" id="reservationNotice" role="status"></div>
-
- </form>
-
-</div></section>
-
-</main>
-
-<footer class="footer"><div class="wrap"><span>© <span id="year"></span> TERAPIA Bar. Feito para viver bons momentos.</span><span>Instagram · TikTok · Bons drinks, boas histórias.</span></div></footer>
-
-<button class="admin-launch" id="openAdmin">⚙ Área dos proprietários</button>
-
-<div class="modal" id="adminModal" role="dialog" aria-modal="true" aria-label="Área dos proprietários"><div class="modal-box">
-
- <div class="modal-top"><h2>Área dos proprietários</h2><button class="close" id="closeAdmin">Fechar ✕</button></div>
-
- <p class="small-note">Painel protegido pelo login do Supabase. Entre com o e-mail e a senha do usuário administrador cadastrado no Supabase.</p>
-
- <div id="loginArea"><form id="loginForm"><div class="field"><label for="adminEmail">E-mail do proprietário</label><input id="adminEmail" type="email" required autocomplete="username" placeholder="Seu e-mail de login"></div><div class="field"><label for="adminPassword">Senha</label><input id="adminPassword" type="password" required autocomplete="current-password" placeholder="Sua senha do Supabase"></div><button class="btn btn-primary" type="submit">Entrar no painel</button><p class="small-note" id="loginError" role="status"></p></form></div>
-
- <div class="admin-content" id="adminContent">
-
-  <div class="admin-tools"><input id="reservationSearch" placeholder="Buscar por nome, data ou telefone"><button class="btn btn-outline" id="exportReservations">Exportar CSV</button><button class="btn btn-outline" id="logout">Sair</button></div>
-
-  <h3>Reservas recebidas</h3><p class="small-note">As solicitações ficam salvas no banco de dados e aparecem nos dispositivos autorizados.</p><div id="reservationList"></div><hr style="border-color:#38332b;margin:25px 0"><h3>Editar cardápio</h3><p class="small-note">Cadastre ou edite os itens reais do cardápio. Categorias: drinks, cervejas, comidas, combos.</p><form id="menuForm"><input type="hidden" id="menuId"><div class="field"><label for="menuName">Nome do item</label><input id="menuName" required maxlength="100"></div><div class="field"><label for="menuDescription">Descrição</label><input id="menuDescription" maxlength="250"></div><div class="formgrid"><div class="field"><label for="menuPrice">Preço (ex.: R$ 29,00)</label><input id="menuPrice" required maxlength="30"></div><div class="field"><label for="menuCategory">Categoria</label><select id="menuCategory"><option value="drinks">Drinks</option><option value="cervejas">Cervejas</option><option value="comidas">Para comer</option><option value="combos">Combos</option></select></div></div><button class="btn btn-primary" type="submit">Salvar item</button> <button class="btn btn-outline" type="button" id="cancelMenuEdit">Limpar formulário</button></form><div id="adminMenuList"></div>
-
-  <hr style="border-color:#38332b;margin:25px 0"><h3>Personalizar a galeria</h3><p class="small-note">Escolha uma foto do computador/celular para enviar ao Supabase ou informe uma URL pública HTTPS.</p>
-
-  <form id="photoForm"><div class="field"><label for="photoFile">Arquivo da foto</label><input id="photoFile" type="file" accept="image/*"></div><div class="field"><label for="photoUrl">Ou URL pública da imagem</label><input id="photoUrl" type="url" placeholder="https://..."></div><div class="field"><label for="photoCaption">Legenda</label><input id="photoCaption" placeholder="Ex.: Nossa área externa"></div><button class="btn btn-primary" type="submit">Enviar foto para a galeria</button></form><div id="adminGalleryList"></div><div class="row-actions"><button class="btn btn-outline" id="resetGallery">Restaurar galeria de exemplo</button><button class="btn danger" id="clearReservations">Apagar todas as reservas</button></div>
-
- </div>
-
-</div></div>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-const SUPABASE_URL = "https://cvhdksxoupitjgouohbl.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_1FNkeVeNr7vC3b0WfK0sKQ_ZfR5SlmN";
-const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-const MENU = {
-  drinks: [
-    {name:"Moscow Mule",desc:"Vodka, limão, gengibre e espuma da casa.",price:"R$ 29,00"},
-    {name:"Aperol Spritz",desc:"Aperol, espumante, água com gás e laranja.",price:"R$ 32,00"},
-    {name:"Caipirinha",desc:"Limão, açúcar e cachaça ou vodka.",price:"R$ 22,00"},
-    {name:"Negroni",desc:"Gin, vermute rosso e bitter.",price:"R$ 30,00"},
-    {name:"Gin Tônica",desc:"Gin, água tônica e toque cítrico.",price:"R$ 28,00"},
-    {name:"Sex on the Beach",desc:"Vodka, pêssego, laranja e cranberry.",price:"R$ 29,00"}
-  ],
-  cervejas: [
-    {name:"Cerveja long neck",desc:"Consulte os rótulos disponíveis no dia.",price:"R$ 12,00"},
-    {name:"Cerveja 600 ml",desc:"Gelada, para compartilhar com a galera.",price:"R$ 18,00"},
-    {name:"Chopp",desc:"Consulte disponibilidade e tamanho.",price:"R$ 12,00"},
-    {name:"Cerveja sem álcool",desc:"Opção para curtir no seu ritmo.",price:"R$ 11,00"}
-  ],
-  comidas: [
-    {name:"Batata frita",desc:"Porção crocante para dividir.",price:"R$ 29,00"},
-    {name:"Calabresa acebolada",desc:"Clássica, com cebola dourada.",price:"R$ 39,00"},
-    {name:"Frango a passarinho",desc:"Porção temperada para a mesa.",price:"R$ 42,00"},
-    {name:"Porção da casa",desc:"Pergunte à equipe sobre a seleção do dia.",price:"R$ 45,00"}
-  ],
-  semalcool: [
-    {name:"Moscow Mule zero",desc:"Gengibre, limão e espuma sem álcool.",price:"R$ 22,00"},
-    {name:"Pink Lemonade",desc:"Limão, frutas vermelhas e água com gás.",price:"R$ 18,00"},
-    {name:"Tropical",desc:"Sucos de frutas e toque cítrico.",price:"R$ 17,00"},
-    {name:"Refrigerante",desc:"Consulte os sabores disponíveis.",price:"R$ 8,00"}
-  ]
-};
-
-const $ = s => document.querySelector(s);
-const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-let currentCat = "drinks";
-let menuRows = [];
-let galleryRows = [];
-let adminLoggedIn = false;
-
-function fallbackMenu(cat) {
-  return (MENU[cat] || []).map(i => `<div class="menu-item"><div><h3>${esc(i.name)}</h3><p>${esc(i.desc)}</p></div><div class="price">${esc(i.price)}</div></div>`).join("");
-}
-async function renderMenu(cat = currentCat) {
-  currentCat = cat;
-  document.querySelectorAll(".menu-tabs button").forEach(b => b.classList.toggle("active", b.dataset.cat === cat));
-  let query = db.from("menu_items").select("id,name,description,price,category,position,active").eq("active", true);
-  if (cat === "combos") query = query.in("category", ["combos", "semalcool"]);
-  else query = query.eq("category", cat);
-  const {data, error} = await query.order("position", {ascending:true});
- if (error) {
-  $("#menuList").innerHTML = "<p>Não foi possível carregar o cardápio.</p>";
-  console.error("Erro ao carregar cardápio:", error);
-  return;
-}
-
-if (!data || data.length === 0) {
-  $("#menuList").innerHTML = "<p>Nenhum produto cadastrado nesta categoria.</p>";
-  return;
-}
-  $("#menuList").innerHTML = data.map(i => `<div class="menu-item"><div><h3>${esc(i.name)}</h3><p>${esc(i.description)}</p></div><div class="price">${esc(i.price)}</div></div>`).join("");
-}
-document.querySelectorAll(".menu-tabs button").forEach(b => b.addEventListener("click", () => renderMenu(b.dataset.cat)));
-$("#year").textContent = new Date().getFullYear();
-const dateInput = $("#date");
-const now = new Date();
-dateInput.min = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0,10);
-
-$("#reservationForm").addEventListener("submit", async e => {
-  e.preventDefault();
-  const btn = e.currentTarget.querySelector('button[type="submit"]');
-  const notice = $("#reservationNotice");
-  btn.disabled = true;
-  btn.textContent = "Enviando...";
-  const form = Object.fromEntries(new FormData(e.currentTarget).entries());
-  const record = {
-    name: form.name.trim(),
-    phone: form.phone.trim(),
-    reservation_date: form.date,
-    reservation_time: form.time,
-    people: form.people,
-    reservation_type: form.kind || "Mesa",
-    notes: form.notes.trim() || null,
-    status: "Pendente"
-  };
-  const {error} = await db.from("reservations").insert(record);
-  btn.disabled = false;
-  btn.textContent = "Enviar solicitação de reserva ↗";
-  notice.style.display = "block";
-  if (error) {
-    notice.textContent = "Não foi possível enviar a reserva agora. Tente novamente ou fale com o bar pelo WhatsApp.";
-    notice.style.borderColor = "#8a4b42";
-    notice.style.background = "#2b1b19";
-  } else {
-    document.querySelector("#menuForm").reset();
-    dateInput.min = new Date().toISOString().slice(0,10);
-    notice.style.borderColor = "#53734d";
-    notice.style.background = "#1b2a1a";
-    notice.textContent = `Solicitação enviada para ${record.name}, dia ${record.reservation_date} às ${record.reservation_time}. Ela está pendente até o bar confirmar.`;
-  }
-});
-
-const modal = $("#adminModal");
-$("#openAdmin").addEventListener("click", () => modal.classList.add("open"));
-$("#closeAdmin").addEventListener("click", () => modal.classList.remove("open"));
-modal.addEventListener("click", e => { if (e.target === modal) modal.classList.remove("open"); });
-
-$("#loginForm").addEventListener("submit", async e => {
-  e.preventDefault();
-  const errorBox = $("#loginError");
-  const btn = e.currentTarget.querySelector('button[type="submit"]');
-  errorBox.textContent = "";
-  btn.disabled = true;
-  btn.textContent = "Verificando...";
-  const email = $("#adminEmail").value.trim();
-  const password = $("#adminPassword").value;
-  const {error: authError} = await db.auth.signInWithPassword({email, password});
-  if (authError) {
-    errorBox.textContent = "Login inválido. Confira o e-mail e a senha cadastrados no Supabase.";
-    btn.disabled = false;
-    btn.textContent = "Entrar no painel";
-    return;
-  }
-  // Only accounts authorized by the reservations RLS policy can open the admin panel.
-  const {error: accessError} = await db.from("reservations").select("id").limit(1);
-  if (accessError) {
-    await db.auth.signOut();
-    errorBox.textContent = "Este usuário não tem permissão de administrador. Cadastre seu usuário na tabela admin_users do Supabase.";
-    btn.disabled = false;
-    btn.textContent = "Entrar no painel";
-    return;
-  }
-  adminLoggedIn = true;
-  $("#loginArea").style.display = "none";
-  $("#adminContent").style.display = "block";
-  btn.disabled = false;
-  btn.textContent = "Entrar no painel";
-  await Promise.all([renderReservations(), loadAdminMenu(), loadAdminGallery()]);
-});
-
-$("#logout").addEventListener("click", async () => {
-  await db.auth.signOut();
-  adminLoggedIn = false;
-  $("#adminContent").style.display = "none";
-  $("#loginArea").style.display = "block";
-  $("#adminPassword").value = "";
-  $("#loginError").textContent = "";
-});
-
-async function renderReservations() {
-  if (!adminLoggedIn) return;
-  const q = ($("#reservationSearch").value || "").toLowerCase();
-  const {data, error} = await db.from("reservations").select("*").order("created_at", {ascending:false});
-  if (error) {
-    $("#reservationList").innerHTML = '<p class="empty">Não foi possível carregar as reservas. Confira as políticas de acesso do Supabase.</p>';
-    return;
-  }
-  const filtered = (data || []).filter(r => [r.name,r.phone,r.reservation_date,r.reservation_time,r.reservation_type,r.status].join(" ").toLowerCase().includes(q));
-  $("#reservationList").innerHTML = filtered.length ? filtered.map(r => `<div class="reservation-row"><strong>${esc(r.name)}</strong> · ${esc(r.status)}<p class="small-note">📅 ${esc(r.reservation_date)} às ${esc(String(r.reservation_time || "").slice(0,5))} · 👥 ${esc(r.people)} · ${esc(r.reservation_type)}<br>☎ ${esc(r.phone)}${r.notes ? `<br>Observações: ${esc(r.notes)}` : ""}</p><div class="row-actions"><button class="btn btn-outline" onclick="setStatus(${Number(r.id)},'Confirmada')">Marcar confirmada</button><button class="btn btn-outline" onclick="setStatus(${Number(r.id)},'Cancelada')">Cancelar</button><button class="btn danger" onclick="deleteReservation(${Number(r.id)})">Excluir</button></div></div>`).join("") : '<p class="empty">Nenhuma reserva encontrada.</p>';
-}
-window.setStatus = async (id, status) => {
-  if (!adminLoggedIn) return;
-  const {error} = await db.from("reservations").update({status}).eq("id", id);
-  if (error) alert("Não foi possível atualizar o status.");
-  else renderReservations();
-};
-window.deleteReservation = async id => {
-  if (!adminLoggedIn || !confirm("Excluir esta reserva?")) return;
-  const {error} = await db.from("reservations").delete().eq("id", id);
-  if (error) alert("Não foi possível excluir a reserva.");
-  else renderReservations();
-};
-$("#reservationSearch").addEventListener("input", renderReservations);
-
-$("#exportReservations").addEventListener("click", async () => {
-  if (!adminLoggedIn) return;
-  const {data, error} = await db.from("reservations").select("*").order("created_at", {ascending:false});
-  if (error || !data || !data.length) { alert("Não há reservas para exportar ou ocorreu um erro."); return; }
-  const cols = ["name","phone","reservation_date","reservation_time","people","reservation_type","notes","status"];
-  const csv = [cols.join(";"), ...data.map(r => cols.map(c => `"${String(r[c] ?? "").replace(/"/g,'""')}"`).join(";"))].join("\n");
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(new Blob(["\ufeff" + csv], {type:"text/csv;charset=utf-8;"}));
-  a.download = "reservas-terapia.csv";
-  a.click();
-  URL.revokeObjectURL(a.href);
-});
-
-async function loadAdminMenu() {
-  if (!adminLoggedIn) return;
-  const {data, error} = await db.from("menu_items").select("*").order("position", {ascending:true});
-  if (error) { $("#adminMenuList").innerHTML = '<p class="empty">Erro ao carregar o cardápio.</p>'; return; }
-  menuRows = data || [];
-  $("#adminMenuList").innerHTML = menuRows.length ? menuRows.map(i => `<div class="reservation-row"><strong>${esc(i.name)}</strong> · ${esc(i.price)} · ${esc(i.category)} · ${i.active ? "Ativo" : "Oculto"}<p class="small-note">${esc(i.description || "")}</p><div class="row-actions"><button class="btn btn-outline" onclick="editMenuItem(${Number(i.id)})">Editar</button><button class="btn btn-outline" onclick="toggleMenuItem(${Number(i.id)},${!i.active})">${i.active ? "Ocultar" : "Ativar"}</button><button class="btn danger" onclick="deleteMenuItem(${Number(i.id)})">Excluir</button></div></div>`).join("") : '<p class="empty">Ainda não há produtos cadastrados no cardápio.</p>';
-}
-$("#menuForm").addEventListener("submit", async e => {
-  e.preventDefault();
-  if (!adminLoggedIn) return;
-  const id = $("#menuId").value;
-  const item = {name:$("#menuName").value.trim(),description:$("#menuDescription").value.trim(),price:$("#menuPrice").value.trim(),category:$("#menuCategory").value === "semalcool" ? "combos" : $("#menuCategory").value,position:menuRows.length + 1};
-  if (!id) item.active = true;
-  const result = id ? await db.from("menu_items").update(item).eq("id", Number(id)) : await db.from("menu_items").insert(item);
-  if (result.error) { alert("Não foi possível salvar o item. Confira as permissões do Supabase."); return; }
-  e.currentTarget.reset();
-  $("#menuId").value = "";
-  await Promise.all([loadAdminMenu(), renderMenu(currentCat)]);
-});
-$("#cancelMenuEdit").addEventListener("click", () => { $("#menuForm").reset(); $("#menuId").value = ""; });
-window.editMenuItem = id => {
-  const i = menuRows.find(row => row.id === id);
-  if (!i) return;
-  $("#menuId").value = i.id;
-  $("#menuName").value = i.name || "";
-  $("#menuDescription").value = i.description || "";
-  $("#menuPrice").value = i.price || "";
-  $("#menuCategory").value = i.category || "drinks";
-  $("#menuForm").scrollIntoView({behavior:"smooth", block:"center"});
-};
-window.toggleMenuItem = async (id, active) => {
-  if (!adminLoggedIn) return;
-  const {error} = await db.from("menu_items").update({active}).eq("id",id);
-  if (error) alert("Não foi possível alterar o item.");
-  else { await loadAdminMenu(); await renderMenu(currentCat); }
-};
-window.deleteMenuItem = async id => {
-  if (!adminLoggedIn || !confirm("Excluir este item do cardápio?")) return;
-  const {error} = await db.from("menu_items").delete().eq("id",id);
-  if (error) alert("Não foi possível excluir o item.");
-  else { await loadAdminMenu(); await renderMenu(currentCat); }
-};
-
-function initGallerySlider() {
-  const gallery = $("#gallery");
-  const dots = $("#galleryDots");
-  if (!gallery || !dots) return;
-  const slides = Array.from(gallery.querySelectorAll(".slide"));
-  let current = 0;
-  const show = index => {
-    if (!slides.length) return;
-    current = (index + slides.length) % slides.length;
-    slides.forEach((slide, i) => slide.classList.toggle("active", i === current));
-    dots.querySelectorAll("button").forEach((dot, i) => {
-      dot.classList.toggle("active", i === current);
-      dot.setAttribute("aria-current", i === current ? "true" : "false");
-    });
-  };
-  dots.innerHTML = slides.map((_, i) => `<button class="gallery-dot${i === 0 ? " active" : ""}" type="button" aria-label="Mostrar foto ${i + 1}"></button>`).join("");
-  dots.querySelectorAll("button").forEach((dot, i) => dot.addEventListener("click", () => show(i)));
-  $("#galleryPrev").onclick = () => show(current - 1);
-  $("#galleryNext").onclick = () => show(current + 1);
-  show(0);
-}
-async function loadGallery() {
-  const {data, error} = await db.from("gallery_images").select("*").order("position", {ascending:true});
-  const gallery = $("#gallery");
-  if (!error && data && data.length) {
-    gallery.querySelectorAll(".slide").forEach(slide => slide.remove());
-    gallery.insertAdjacentHTML("beforeend", data.map(p => `<div class="slide"><img src="${esc(p.image_url)}" alt="${esc(p.caption || "TERAPIA Bar")}" loading="lazy"><div class="slide-label">${esc(p.caption || "TERAPIA Bar")}</div></div>`).join(""));
-    galleryRows = data;
-  }
-  initGallerySlider();
-}
-async function loadAdminGallery() {
-  if (!adminLoggedIn) return;
-  const {data, error} = await db.from("gallery_images").select("*").order("position", {ascending:true});
-  if (error) { $("#adminGalleryList").innerHTML = '<p class="empty">Erro ao carregar a galeria.</p>'; return; }
-  galleryRows = data || [];
-  $("#adminGalleryList").innerHTML = galleryRows.length ? galleryRows.map(p => `<div class="reservation-row"><strong>${esc(p.caption || "Foto")}</strong><p class="small-note">${esc(p.image_url)}</p><div class="row-actions"><button class="btn danger" onclick="deleteGalleryPhoto(${Number(p.id)})">Excluir foto</button></div></div>`).join("") : '<p class="empty">Nenhuma foto personalizada no banco ainda; as fotos de exemplo continuam visíveis.</p>';
-}
-$("#photoForm").addEventListener("submit", async e => {
-  e.preventDefault();
-  if (!adminLoggedIn) return;
-  const file = $("#photoFile").files[0];
-  let url = $("#photoUrl").value.trim();
-  const caption = $("#photoCaption").value.trim() || "TERAPIA Bar";
-  const btn = e.currentTarget.querySelector('button[type="submit"]');
-  if (!file && !url) { alert("Escolha um arquivo ou informe uma URL pública."); return; }
-  btn.disabled = true;
-  btn.textContent = "Enviando foto...";
-  if (file) {
-    if (!file.type.startsWith("image/")) { alert("Escolha um arquivo de imagem."); btn.disabled = false; btn.textContent = "Enviar foto para a galeria"; return; }
-    if (file.size > 8 * 1024 * 1024) { alert("A imagem deve ter no máximo 8 MB."); btn.disabled = false; btn.textContent = "Enviar foto para a galeria"; return; }
-    const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "-");
-    const path = `${Date.now()}-${safeName}`;
-    const {error: uploadError} = await db.storage.from("terapia-fotos").upload(path, file, {upsert:false, contentType:file.type});
-    if (uploadError) {
-      alert("O envio falhou. Confira as políticas de Storage do Supabase e tente novamente.");
-      btn.disabled = false; btn.textContent = "Enviar foto para a galeria"; return;
+  </header>
+
+  <main>
+
+    <section class="hero" id="inicio">
+      <div class="wrap">
+        <div class="hero-content">
+
+            <div class="eyebrow">Esqueça a rotina. Viva a noite.</div>
+
+            <h1>Tem dias que pedem<br><em>TERAPIA.</em></h1>
+
+            <p>Um bom drink, música boa, gente querida e histórias que começam aqui. Seu lugar para relaxar, brindar e
+            aproveitar o momento.</p>
+
+            <div class="actions"><a class="btn btn-primary" href="#reservas">Faça sua reserva ↗</a><a
+              class="btn btn-outline" href="#cardapio">Explorar cardápio</a></div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="section wrap" id="experiencia">
+
+       <div class="section-head">
+        <div>
+          <div class="eyebrow">Mais que um bar</div>
+          <h2>A noite merece um lugar especial.</h2>
+        </div>
+        <p class="section-intro">Chegue para tomar uma, fique pela vibe. No TERAPIA, cada detalhe é um convite para sair
+          do automático e curtir de verdade.</p>
+      </div>
+
+       <div class="cards">
+
+          <article class="card"><img
+            src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=900&q=80"
+            alt="Drinks preparados no bar">
+          <div class="card-body">
+            <h3>Drinks de respeito</h3>
+            <p>Clássicos, combinações refrescantes e aquele brinde que melhora qualquer noite.</p>
+          </div>
+        </article>
+
+          <article class="card"><img
+            src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=900&q=80"
+            alt="Ambiente de música e diversão">
+          <div class="card-body">
+            <h3>Vibe lá em cima</h3>
+            <p>Um ambiente feito para conversar, comemorar e aproveitar cada momento.</p>
+          </div>
+        </article>
+
+          <article class="card"><img
+            src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=900&q=80"
+            alt="Amigos reunidos em uma noite especial">
+          <div class="card-body">
+            <h3>Momentos juntos</h3>
+            <p>Chame a galera, comemore uma data ou transforme uma noite comum em lembrança boa.</p>
+          </div>
+        </article>
+
+         </div>
+
+    </section>
+
+    <section class="section" id="cardapio" style="background:#151515">
+      <div class="wrap">
+
+         <div class="eyebrow">Feito para brindar</div>
+        <h2>Cardápio da casa</h2>
+        <p class="section-intro">Confira algumas sugestões. Os itens e preços abaixo são exemplos editáveis —
+          personalize com o cardápio real do TERAPIA.</p>
+
+         <div class="menu-tabs"><button class="active" data-cat="drinks">Drinks</button><button
+            data-cat="cervejas">Cervejas</button><button data-cat="comidas">Para comer</button><button
+            data-cat="combos">Combos</button></div>
+
+         <div class="menu-list" id="menuList"></div>
+
+      </div>
+    </section>
+
+    <section class="section wrap" id="galeria">
+
+       <div class="section-head">
+        <div>
+          <div class="eyebrow">Um pouco da nossa vibe</div>
+          <h2>O TERAPIA em imagens</h2>
+        </div>
+      </div>
+
+       <div class="gallery" id="gallery">
+        <button class="gallery-arrow gallery-prev" id="galleryPrev" type="button"
+          aria-label="Foto anterior">&#10094;</button>
+        <button class="gallery-arrow gallery-next" id="galleryNext" type="button"
+          aria-label="Próxima foto">&#10095;</button>
+
+          <div class="slide"><img
+            src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1000&q=85"
+            alt="Interior de bar">
+          <div class="slide-label">Seu próximo rolê começa aqui</div>
+        </div>
+
+          <div class="slide"><img
+            src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=800&q=80"
+            alt="Drink colorido">
+          <div class="slide-label">Drinks & brindes</div>
+        </div>
+
+          <div class="slide"><img
+            src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=800&q=80"
+            alt="Pista e música">
+          <div class="slide-label">Música boa</div>
+        </div>
+
+          <div class="slide"><img
+            src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=800&q=80"
+            alt="Amigos à mesa">
+          <div class="slide-label">Gente querida</div>
+        </div>
+
+          <div class="slide"><img
+            src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=800&q=80"
+            alt="Comida servida">
+          <div class="slide-label">Sabor de casa</div>
+        </div>
+
+         
+      </div>
+      <div class="gallery-dots" id="galleryDots" aria-label="Escolher foto"></div>
+
+
+    </section>
+
+    <section class="section" id="reservas" style="background:#151515">
+      <div class="wrap reserve-grid">
+
+         <div class="reserve-copy">
+          <div class="eyebrow">Garanta seu lugar</div>
+          <h3>Reserva feita sem complicação.</h3>
+          <p>Preencha os dados e envie sua solicitação. A reserva ficará registrada no sistema do site para os
+            responsáveis consultarem. Aguarde a confirmação do bar antes de considerar a reserva confirmada.</p>
+          <p>Precisa tirar uma dúvida? Fale com a gente pelo WhatsApp.</p><a class="btn btn-outline" target="_blank"
+            rel="noopener"
+            href="https://wa.me/5511988168222?text=Ol%C3%A1%2C%20tenho%20uma%20d%C3%BAvida%20sobre%20o%20TERAPIA%20Bar.">Tirar
+            dúvida no WhatsApp ↗</a>
+
+           <div class="socials"><a target="_blank" rel="noopener"
+              href="https://www.instagram.com/terapiiabar/?obrf=MXZyMm4ydjNyNXI4bg==">Instagram ↗</a><a target="_blank"
+              rel="noopener" href="https://www.tiktok.com/@terapiiabar?_r=1&_t=ZS-9AqLkmHDoAh">TikTok ↗</a></div>
+
+           
+        </div>
+
+         <form class="formbox" id="reservationForm">
+          <div class="eyebrow">Solicitar reserva</div>
+          <h2 style="font-size:29px">Quem vem com você?</h2>
+
+            <div class="formgrid">
+
+               <div class="field"><label for="name">Nome completo *</label><input id="name" name="name" required
+                placeholder="Seu nome"></div>
+
+               <div class="field"><label for="phone">Telefone *</label><input id="phone" name="phone" required
+                type="tel" placeholder="(11) 99999-9999"></div>
+
+               <div class="field"><label for="date">Data *</label><input id="date" name="date" type="date" required>
+            </div>
+
+               <div class="field"><label for="time">Horário desejado *</label><input id="time" name="time" type="time"
+                required></div>
+
+               <div class="field"><label for="people">Quantidade de pessoas *</label><select id="people" name="people"
+                required>
+                <option value="">Selecione</option>
+                <option>1 pessoa</option>
+                <option>2 pessoas</option>
+                <option>3 pessoas</option>
+                <option>4 pessoas</option>
+                <option>5 pessoas</option>
+                <option>6 pessoas</option>
+                <option>7 pessoas</option>
+                <option>8 pessoas</option>
+                <option>9 pessoas</option>
+                <option>10 pessoas</option>
+                <option>Mais de 10 pessoas</option>
+              </select></div>
+
+               
+
+               <div class="field full"><label for="notes">Observações (opcional)</label><textarea id="notes"
+                name="notes" placeholder="Alguma preferência ou ocasião especial?"></textarea></div>
+
+              </div><button class="btn btn-primary" type="submit" style="width:100%">Enviar solicitação de reserva
+            ↗</button>
+
+            <p class="small-note">Ao enviar, sua solicitação será enviada ao sistema do TERAPIA Bar. A reserva só estará
+            confirmada após retorno do estabelecimento.</p>
+
+            <div class="notice" id="reservationNotice" role="status"></div>
+
+           
+        </form>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="wrap"><span>© <span id="year"></span> TERAPIA Bar. Feito para viver bons momentos.</span><span>Instagram
+        · TikTok · Bons drinks, boas histórias.</span></div>
+  </footer>
+
+  <button class="admin-launch" id="openAdmin">⚙ Área dos proprietários</button>
+
+  <div class="modal" id="adminModal" role="dialog" aria-modal="true" aria-label="Área dos proprietários">
+    <div class="modal-box">
+
+       <div class="modal-top">
+        <h2>Área dos proprietários</h2><button class="close" id="closeAdmin">Fechar ✕</button>
+      </div>
+
+       <p class="small-note">Painel protegido pelo login do Supabase. Entre com o e-mail e a senha do usuário
+        administrador cadastrado no Supabase.</p>
+
+       <div id="loginArea">
+        <form id="loginForm">
+          <div class="field"><label for="adminEmail">E-mail do proprietário</label><input id="adminEmail" type="email"
+              required autocomplete="username" placeholder="Seu e-mail de login"></div>
+          <div class="field"><label for="adminPassword">Senha</label><input id="adminPassword" type="password" required
+              autocomplete="current-password" placeholder="Sua senha do Supabase"></div><button class="btn btn-primary"
+            type="submit">Entrar no painel</button>
+          <p class="small-note" id="loginError" role="status"></p>
+        </form>
+      </div>
+
+       <div class="admin-content" id="adminContent">
+
+          <div class="admin-tools"><input id="reservationSearch" placeholder="Buscar por nome, data ou telefone"><button
+            class="btn btn-outline" id="exportReservations">Exportar CSV</button><button class="btn btn-outline"
+            id="logout">Sair</button></div>
+
+          <h3>Reservas recebidas</h3>
+        <p class="small-note">As solicitações ficam salvas no banco de dados e aparecem nos dispositivos autorizados.
+        </p>
+        <div id="reservationList"></div>
+        <hr style="border-color:#38332b;margin:25px 0">
+        <h3>Editar cardápio</h3>
+        <p class="small-note">Cadastre ou edite os itens reais do cardápio. Categorias: drinks, cervejas, comidas,
+          combos.</p>
+        <form id="menuForm"><input type="hidden" id="menuId">
+          <div class="field"><label for="menuName">Nome do item</label><input id="menuName" required maxlength="100">
+          </div>
+          <div class="field"><label for="menuDescription">Descrição</label><input id="menuDescription" maxlength="250">
+          </div>
+          <div class="formgrid">
+            <div class="field"><label for="menuPrice">Preço (ex.: R$ 29,00)</label><input id="menuPrice" required
+                maxlength="30"></div>
+            <div class="field"><label for="menuCategory">Categoria</label><select id="menuCategory">
+                <option value="drinks">Drinks</option>
+                <option value="cervejas">Cervejas</option>
+                <option value="comidas">Para comer</option>
+                <option value="combos">Combos</option>
+              </select></div>
+          </div><button class="btn btn-primary" type="submit">Salvar item</button> <button class="btn btn-outline"
+            type="button" id="cancelMenuEdit">Limpar formulário</button>
+        </form>
+        <div id="adminMenuList"></div>
+
+         
+        <hr style="border-color:#38332b;margin:25px 0">
+        <h3>Personalizar a galeria</h3>
+        <p class="small-note">Escolha uma foto do computador/celular para enviar ao Supabase ou informe uma URL pública
+          HTTPS.</p>
+
+          <form id="photoForm">
+          <div class="field"><label for="photoFile">Arquivo da foto</label><input id="photoFile" type="file"
+              accept="image/*"></div>
+          <div class="field"><label for="photoUrl">Ou URL pública da imagem</label><input id="photoUrl" type="url"
+              placeholder="https://..."></div>
+          <div class="field"><label for="photoCaption">Legenda</label><input id="photoCaption"
+              placeholder="Ex.: Nossa área externa"></div><button class="btn btn-primary" type="submit">Enviar foto para
+            a galeria</button>
+        </form>
+        <div id="adminGalleryList"></div>
+        <div class="row-actions"><button class="btn btn-outline" id="resetGallery">Restaurar galeria de
+            exemplo</button><button class="btn danger" id="clearReservations">Apagar todas as reservas</button></div>
+
+         
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL = "https://cvhdksxoupitjgouohbl.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_1FNkeVeNr7vC3b0WfK0sKQ_ZfR5SlmN";
+    const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const MENU = {
+      drinks: [
+        { name: "Moscow Mule", desc: "Vodka, limão, gengibre e espuma da casa.", price: "R$ 29,00" },
+        { name: "Aperol Spritz", desc: "Aperol, espumante, água com gás e laranja.", price: "R$ 32,00" },
+        { name: "Caipirinha", desc: "Limão, açúcar e cachaça ou vodka.", price: "R$ 22,00" },
+        { name: "Negroni", desc: "Gin, vermute rosso e bitter.", price: "R$ 30,00" },
+        { name: "Gin Tônica", desc: "Gin, água tônica e toque cítrico.", price: "R$ 28,00" },
+        { name: "Sex on the Beach", desc: "Vodka, pêssego, laranja e cranberry.", price: "R$ 29,00" }
+      ],
+      cervejas: [
+        { name: "Cerveja long neck", desc: "Consulte os rótulos disponíveis no dia.", price: "R$ 12,00" },
+        { name: "Cerveja 600 ml", desc: "Gelada, para compartilhar com a galera.", price: "R$ 18,00" },
+        { name: "Chopp", desc: "Consulte disponibilidade e tamanho.", price: "R$ 12,00" },
+        { name: "Cerveja sem álcool", desc: "Opção para curtir no seu ritmo.", price: "R$ 11,00" }
+      ],
+      comidas: [
+        { name: "Batata frita", desc: "Porção crocante para dividir.", price: "R$ 29,00" },
+        { name: "Calabresa acebolada", desc: "Clássica, com cebola dourada.", price: "R$ 39,00" },
+        { name: "Frango a passarinho", desc: "Porção temperada para a mesa.", price: "R$ 42,00" },
+        { name: "Porção da casa", desc: "Pergunte à equipe sobre a seleção do dia.", price: "R$ 45,00" }
+      ],
+      semalcool: [
+        { name: "Moscow Mule zero", desc: "Gengibre, limão e espuma sem álcool.", price: "R$ 22,00" },
+        { name: "Pink Lemonade", desc: "Limão, frutas vermelhas e água com gás.", price: "R$ 18,00" },
+        { name: "Tropical", desc: "Sucos de frutas e toque cítrico.", price: "R$ 17,00" },
+        { name: "Refrigerante", desc: "Consulte os sabores disponíveis.", price: "R$ 8,00" }
+      ]
+    };
+
+    const $ = s => document.querySelector(s);
+    const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    let currentCat = "drinks";
+    let menuRows = [];
+    let galleryRows = [];
+    let adminLoggedIn = false;
+
+    function fallbackMenu(cat) {
+      return (MENU[cat] || []).map(i => `<div class="menu-item"><div><h3>${esc(i.name)}</h3><p>${esc(i.desc)}</p></div><div class="price">${esc(i.price)}</div></div>`).join("");
     }
-    url = db.storage.from("terapia-fotos").getPublicUrl(path).data.publicUrl;
-  } else if (!/^https:\/\//i.test(url)) {
-    alert("A URL precisa começar com https://");
-    btn.disabled = false; btn.textContent = "Enviar foto para a galeria"; return;
-  }
-  const {error} = await db.from("gallery_images").insert({image_url:url,caption,position:galleryRows.length + 1});
-  btn.disabled = false;
-  btn.textContent = "Enviar foto para a galeria";
-  if (error) { alert("A foto foi enviada, mas não foi possível registrá-la na galeria. Confira as permissões da tabela."); return; }
-  e.currentTarget.reset();
-  await Promise.all([loadGallery(),loadAdminGallery()]);
-});
-window.deleteGalleryPhoto = async id => {
-  if (!adminLoggedIn || !confirm("Excluir esta foto da galeria?")) return;
-  const {error} = await db.from("gallery_images").delete().eq("id",id);
-  if (error) alert("Não foi possível excluir a foto.");
-  else { await Promise.all([loadGallery(),loadAdminGallery()]); }
-};
-$("#resetGallery").addEventListener("click", () => alert("As fotos de exemplo ficam no HTML. Para remover fotos personalizadas, use o botão Excluir foto ao lado de cada imagem."));
-$("#clearReservations").addEventListener("click", async () => {
-  if (!adminLoggedIn || !confirm("Tem certeza que deseja apagar TODAS as reservas do banco de dados? Esta ação afeta todos os dispositivos.")) return;
-  const {error} = await db.from("reservations").delete().not("id","is",null);
-  if (error) alert("Não foi possível apagar as reservas.");
-  else renderReservations();
-});
+    async function renderMenu(cat = currentCat) {
+      currentCat = cat;
+      document.querySelectorAll(".menu-tabs button").forEach(b => b.classList.toggle("active", b.dataset.cat === cat));
+      let query = db.from("menu_items").select("id,name,description,price,category,position,active").eq("active", true);
+      if (cat === "combos") query = query.in("category", ["combos", "semalcool"]);
+      else query = query.eq("category", cat);
+      const { data, error } = await query.order("position", { ascending: true });
+      if (error) {
+        $("#menuList").innerHTML = "<p>Não foi possível carregar o cardápio.</p>";
+        console.error("Erro ao carregar cardápio:", error);
+        return;
+      }
 
-(async function init() {
-  await renderMenu("drinks");
-  await loadGallery();
-  const {data} = await db.auth.getSession();
-  if (data?.session) {
-    // Do not silently show the admin panel for a session without admin rights.
-    const {error} = await db.from("reservations").select("id").limit(1);
-    if (!error) {
+      if (!data || data.length === 0) {
+        $("#menuList").innerHTML = "<p>Nenhum produto cadastrado nesta categoria.</p>";
+        return;
+      }
+      $("#menuList").innerHTML = data.map(i => `<div class="menu-item"><div><h3>${esc(i.name)}</h3><p>${esc(i.description)}</p></div><div class="price">${esc(i.price)}</div></div>`).join("");
+    }
+    document.querySelectorAll(".menu-tabs button").forEach(b => b.addEventListener("click", () => renderMenu(b.dataset.cat)));
+    $("#year").textContent = new Date().getFullYear();
+    const dateInput = $("#date");
+    const now = new Date();
+    dateInput.min = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+
+    $("#reservationForm").addEventListener("submit", async e => {
+      e.preventDefault();
+      const btn = e.currentTarget.querySelector('button[type="submit"]');
+      const notice = $("#reservationNotice");
+      btn.disabled = true;
+      btn.textContent = "Enviando...";
+      const form = Object.fromEntries(new FormData(e.currentTarget).entries());
+      const record = {
+        name: form.name.trim(),
+        phone: form.phone.trim(),
+        reservation_date: form.date,
+        reservation_time: form.time,
+        people: form.people,
+        reservation_type: form.kind || "Mesa",
+        notes: form.notes.trim() || null,
+        status: "Pendente"
+      };
+      const { error } = await db.from("reservations").insert(record);
+      btn.disabled = false;
+      btn.textContent = "Enviar solicitação de reserva ↗";
+      notice.style.display = "block";
+      if (error) {
+        notice.textContent = "Não foi possível enviar a reserva agora. Tente novamente ou fale com o bar pelo WhatsApp.";
+        notice.style.borderColor = "#8a4b42";
+        notice.style.background = "#2b1b19";
+      } else {
+        document.querySelector("#menuForm").reset();
+        dateInput.min = new Date().toISOString().slice(0, 10);
+        notice.style.borderColor = "#53734d";
+        notice.style.background = "#1b2a1a";
+        notice.textContent = `Solicitação enviada para ${record.name}, dia ${record.reservation_date} às ${record.reservation_time}. Ela está pendente até o bar confirmar.`;
+      }
+    });
+
+    const modal = $("#adminModal");
+    $("#openAdmin").addEventListener("click", () => modal.classList.add("open"));
+    $("#closeAdmin").addEventListener("click", () => modal.classList.remove("open"));
+    modal.addEventListener("click", e => { if (e.target === modal) modal.classList.remove("open"); });
+
+    $("#loginForm").addEventListener("submit", async e => {
+      e.preventDefault();
+      const errorBox = $("#loginError");
+      const btn = e.currentTarget.querySelector('button[type="submit"]');
+      errorBox.textContent = "";
+      btn.disabled = true;
+      btn.textContent = "Verificando...";
+      const email = $("#adminEmail").value.trim();
+      const password = $("#adminPassword").value;
+      const { error: authError } = await db.auth.signInWithPassword({ email, password });
+      if (authError) {
+        errorBox.textContent = "Login inválido. Confira o e-mail e a senha cadastrados no Supabase.";
+        btn.disabled = false;
+        btn.textContent = "Entrar no painel";
+        return;
+      }
+      // Only accounts authorized by the reservations RLS policy can open the admin panel.
+      const { error: accessError } = await db.from("reservations").select("id").limit(1);
+      if (accessError) {
+        await db.auth.signOut();
+        errorBox.textContent = "Este usuário não tem permissão de administrador. Cadastre seu usuário na tabela admin_users do Supabase.";
+        btn.disabled = false;
+        btn.textContent = "Entrar no painel";
+        return;
+      }
       adminLoggedIn = true;
       $("#loginArea").style.display = "none";
       $("#adminContent").style.display = "block";
-      await Promise.all([renderReservations(),loadAdminMenu(),loadAdminGallery()]);
-    } else {
+      btn.disabled = false;
+      btn.textContent = "Entrar no painel";
+      await Promise.all([renderReservations(), loadAdminMenu(), loadAdminGallery()]);
+    });
+
+    $("#logout").addEventListener("click", async () => {
       await db.auth.signOut();
+      adminLoggedIn = false;
+      $("#adminContent").style.display = "none";
+      $("#loginArea").style.display = "block";
+      $("#adminPassword").value = "";
+      $("#loginError").textContent = "";
+    });
+
+    async function renderReservations() {
+      if (!adminLoggedIn) return;
+      const q = ($("#reservationSearch").value || "").toLowerCase();
+      const { data, error } = await db.from("reservations").select("*").order("created_at", { ascending: false });
+      if (error) {
+        $("#reservationList").innerHTML = '<p class="empty">Não foi possível carregar as reservas. Confira as políticas de acesso do Supabase.</p>';
+        return;
+      }
+      const filtered = (data || []).filter(r => [r.name, r.phone, r.reservation_date, r.reservation_time, r.reservation_type, r.status].join(" ").toLowerCase().includes(q));
+      $("#reservationList").innerHTML = filtered.length ? filtered.map(r => `<div class="reservation-row"><strong>${esc(r.name)}</strong> · ${esc(r.status)}<p class="small-note">📅 ${esc(r.reservation_date)} às ${esc(String(r.reservation_time || "").slice(0, 5))} · 👥 ${esc(r.people)} · ${esc(r.reservation_type)}<br>☎ ${esc(r.phone)}${r.notes ? `<br>Observações: ${esc(r.notes)}` : ""}</p><div class="row-actions"><button class="btn btn-outline" onclick="setStatus(${Number(r.id)},'Confirmada')">Marcar confirmada</button><button class="btn btn-outline" onclick="setStatus(${Number(r.id)},'Cancelada')">Cancelar</button><button class="btn danger" onclick="deleteReservation(${Number(r.id)})">Excluir</button></div></div>`).join("") : '<p class="empty">Nenhuma reserva encontrada.</p>';
     }
-  }
-})();
-</script>
+    window.setStatus = async (id, status) => {
+      if (!adminLoggedIn) return;
+      const { error } = await db.from("reservations").update({ status }).eq("id", id);
+      if (error) alert("Não foi possível atualizar o status.");
+      else renderReservations();
+    };
+    window.deleteReservation = async id => {
+      if (!adminLoggedIn || !confirm("Excluir esta reserva?")) return;
+      const { error } = await db.from("reservations").delete().eq("id", id);
+      if (error) alert("Não foi possível excluir a reserva.");
+      else renderReservations();
+    };
+    $("#reservationSearch").addEventListener("input", renderReservations);
+
+    $("#exportReservations").addEventListener("click", async () => {
+      if (!adminLoggedIn) return;
+      const { data, error } = await db.from("reservations").select("*").order("created_at", { ascending: false });
+      if (error || !data || !data.length) { alert("Não há reservas para exportar ou ocorreu um erro."); return; }
+      const cols = ["name", "phone", "reservation_date", "reservation_time", "people", "reservation_type", "notes", "status"];
+      const csv = [cols.join(";"), ...data.map(r => cols.map(c => `"${String(r[c] ?? "").replace(/"/g, '""')}"`).join(";"))].join("\n");
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8;" }));
+      a.download = "reservas-terapia.csv";
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
+
+    async function loadAdminMenu() {
+      if (!adminLoggedIn) return;
+      const { data, error } = await db.from("menu_items").select("*").order("position", { ascending: true });
+      if (error) { $("#adminMenuList").innerHTML = '<p class="empty">Erro ao carregar o cardápio.</p>'; return; }
+      menuRows = data || [];
+      $("#adminMenuList").innerHTML = menuRows.length ? menuRows.map(i => `<div class="reservation-row"><strong>${esc(i.name)}</strong> · ${esc(i.price)} · ${esc(i.category)} · ${i.active ? "Ativo" : "Oculto"}<p class="small-note">${esc(i.description || "")}</p><div class="row-actions"><button class="btn btn-outline" onclick="editMenuItem(${Number(i.id)})">Editar</button><button class="btn btn-outline" onclick="toggleMenuItem(${Number(i.id)},${!i.active})">${i.active ? "Ocultar" : "Ativar"}</button><button class="btn danger" onclick="deleteMenuItem(${Number(i.id)})">Excluir</button></div></div>`).join("") : '<p class="empty">Ainda não há produtos cadastrados no cardápio.</p>';
+    }
+    $("#menuForm").addEventListener("submit", async e => {
+      e.preventDefault();
+      if (!adminLoggedIn) return;
+      const id = $("#menuId").value;
+      const item = { name: $("#menuName").value.trim(), description: $("#menuDescription").value.trim(), price: $("#menuPrice").value.trim(), category: $("#menuCategory").value === "semalcool" ? "combos" : $("#menuCategory").value, position: menuRows.length + 1 };
+      if (!id) item.active = true;
+      const result = id ? await db.from("menu_items").update(item).eq("id", Number(id)) : await db.from("menu_items").insert(item);
+      if (result.error) { alert("Não foi possível salvar o item. Confira as permissões do Supabase."); return; }
+      e.currentTarget.reset();
+      $("#menuId").value = "";
+      await Promise.all([loadAdminMenu(), renderMenu(currentCat)]);
+    });
+    $("#cancelMenuEdit").addEventListener("click", () => { $("#menuForm").reset(); $("#menuId").value = ""; });
+    window.editMenuItem = id => {
+      const i = menuRows.find(row => row.id === id);
+      if (!i) return;
+      $("#menuId").value = i.id;
+      $("#menuName").value = i.name || "";
+      $("#menuDescription").value = i.description || "";
+      $("#menuPrice").value = i.price || "";
+      $("#menuCategory").value = i.category || "drinks";
+      $("#menuForm").scrollIntoView({ behavior: "smooth", block: "center" });
+    };
+    window.toggleMenuItem = async (id, active) => {
+      if (!adminLoggedIn) return;
+      const { error } = await db.from("menu_items").update({ active }).eq("id", id);
+      if (error) alert("Não foi possível alterar o item.");
+      else { await loadAdminMenu(); await renderMenu(currentCat); }
+    };
+    window.deleteMenuItem = async id => {
+      if (!adminLoggedIn || !confirm("Excluir este item do cardápio?")) return;
+      const { error } = await db.from("menu_items").delete().eq("id", id);
+      if (error) alert("Não foi possível excluir o item.");
+      else { await loadAdminMenu(); await renderMenu(currentCat); }
+    };
+
+    function initGallerySlider() {
+      const gallery = $("#gallery");
+      const dots = $("#galleryDots");
+      if (!gallery || !dots) return;
+      const slides = Array.from(gallery.querySelectorAll(".slide"));
+      let current = 0;
+      const show = index => {
+        if (!slides.length) return;
+        current = (index + slides.length) % slides.length;
+        slides.forEach((slide, i) => slide.classList.toggle("active", i === current));
+        dots.querySelectorAll("button").forEach((dot, i) => {
+          dot.classList.toggle("active", i === current);
+          dot.setAttribute("aria-current", i === current ? "true" : "false");
+        });
+      };
+      dots.innerHTML = slides.map((_, i) => `<button class="gallery-dot${i === 0 ? " active" : ""}" type="button" aria-label="Mostrar foto ${i + 1}"></button>`).join("");
+      dots.querySelectorAll("button").forEach((dot, i) => dot.addEventListener("click", () => show(i)));
+      $("#galleryPrev").onclick = () => show(current - 1);
+      $("#galleryNext").onclick = () => show(current + 1);
+      show(0);
+    }
+    async function loadGallery() {
+      const { data, error } = await db.from("gallery_images").select("*").order("position", { ascending: true });
+      const gallery = $("#gallery");
+      if (!error && data && data.length) {
+        gallery.querySelectorAll(".slide").forEach(slide => slide.remove());
+        gallery.insertAdjacentHTML("beforeend", data.map(p => `<div class="slide"><img src="${esc(p.image_url)}" alt="${esc(p.caption || "TERAPIA Bar")}" loading="lazy"><div class="slide-label">${esc(p.caption || "TERAPIA Bar")}</div></div>`).join(""));
+        galleryRows = data;
+      }
+      initGallerySlider();
+    }
+    async function loadAdminGallery() {
+      if (!adminLoggedIn) return;
+      const { data, error } = await db.from("gallery_images").select("*").order("position", { ascending: true });
+      if (error) { $("#adminGalleryList").innerHTML = '<p class="empty">Erro ao carregar a galeria.</p>'; return; }
+      galleryRows = data || [];
+      $("#adminGalleryList").innerHTML = galleryRows.length ? galleryRows.map(p => `<div class="reservation-row"><strong>${esc(p.caption || "Foto")}</strong><p class="small-note">${esc(p.image_url)}</p><div class="row-actions"><button class="btn danger" onclick="deleteGalleryPhoto(${Number(p.id)})">Excluir foto</button></div></div>`).join("") : '<p class="empty">Nenhuma foto personalizada no banco ainda; as fotos de exemplo continuam visíveis.</p>';
+    }
+    $("#photoForm").addEventListener("submit", async e => {
+      e.preventDefault();
+      if (!adminLoggedIn) return;
+      const file = $("#photoFile").files[0];
+      let url = $("#photoUrl").value.trim();
+      const caption = $("#photoCaption").value.trim() || "TERAPIA Bar";
+      const btn = e.currentTarget.querySelector('button[type="submit"]');
+      if (!file && !url) { alert("Escolha um arquivo ou informe uma URL pública."); return; }
+      btn.disabled = true;
+      btn.textContent = "Enviando foto...";
+      if (file) {
+        if (!file.type.startsWith("image/")) { alert("Escolha um arquivo de imagem."); btn.disabled = false; btn.textContent = "Enviar foto para a galeria"; return; }
+        if (file.size > 8 * 1024 * 1024) { alert("A imagem deve ter no máximo 8 MB."); btn.disabled = false; btn.textContent = "Enviar foto para a galeria"; return; }
+        const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "-");
+        const path = `${Date.now()}-${safeName}`;
+        const { error: uploadError } = await db.storage.from("terapia-fotos").upload(path, file, { upsert: false, contentType: file.type });
+        if (uploadError) {
+          alert("O envio falhou. Confira as políticas de Storage do Supabase e tente novamente.");
+          btn.disabled = false; btn.textContent = "Enviar foto para a galeria"; return;
+        }
+        url = db.storage.from("terapia-fotos").getPublicUrl(path).data.publicUrl;
+      } else if (!/^https:\/\//i.test(url)) {
+        alert("A URL precisa começar com https://");
+        btn.disabled = false; btn.textContent = "Enviar foto para a galeria"; return;
+      }
+      const { error } = await db.from("gallery_images").insert({ image_url: url, caption, position: galleryRows.length + 1 });
+      btn.disabled = false;
+      btn.textContent = "Enviar foto para a galeria";
+      if (error) { alert("A foto foi enviada, mas não foi possível registrá-la na galeria. Confira as permissões da tabela."); return; }
+      e.currentTarget.reset();
+      await Promise.all([loadGallery(), loadAdminGallery()]);
+    });
+    window.deleteGalleryPhoto = async id => {
+      if (!adminLoggedIn || !confirm("Excluir esta foto da galeria?")) return;
+      const { error } = await db.from("gallery_images").delete().eq("id", id);
+      if (error) alert("Não foi possível excluir a foto.");
+      else { await Promise.all([loadGallery(), loadAdminGallery()]); }
+    };
+    $("#resetGallery").addEventListener("click", () => alert("As fotos de exemplo ficam no HTML. Para remover fotos personalizadas, use o botão Excluir foto ao lado de cada imagem."));
+    $("#clearReservations").addEventListener("click", async () => {
+      if (!adminLoggedIn || !confirm("Tem certeza que deseja apagar TODAS as reservas do banco de dados? Esta ação afeta todos os dispositivos.")) return;
+      const { error } = await db.from("reservations").delete().not("id", "is", null);
+      if (error) alert("Não foi possível apagar as reservas.");
+      else renderReservations();
+    });
+
+    (async function init() {
+      await renderMenu("drinks");
+      await loadGallery();
+      const { data } = await db.auth.getSession();
+      if (data?.session) {
+        // Do not silently show the admin panel for a session without admin rights.
+        const { error } = await db.from("reservations").select("id").limit(1);
+        if (!error) {
+          adminLoggedIn = true;
+          $("#loginArea").style.display = "none";
+          $("#adminContent").style.display = "block";
+          await Promise.all([renderReservations(), loadAdminMenu(), loadAdminGallery()]);
+        } else {
+          await db.auth.signOut();
+        }
+      }
+    })();
+  </script>
 
 </body>
 
