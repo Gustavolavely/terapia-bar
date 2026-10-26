@@ -72,7 +72,7 @@
 
  <div class="eyebrow">Feito para brindar</div><h2>Cardápio da casa</h2><p class="section-intro">Confira algumas sugestões. Os itens e preços abaixo são exemplos editáveis — personalize com o cardápio real do TERAPIA.</p>
 
- <div class="menu-tabs"><button class="active" data-cat="drinks">Drinks</button><button data-cat="cervejas">Cervejas</button><button data-cat="comidas">Para comer</button><button data-cat="semalcool">Sem álcool</button></div>
+ <div class="menu-tabs"><button class="active" data-cat="drinks">Drinks</button><button data-cat="cervejas">Cervejas</button><button data-cat="comidas">Para comer</button><button data-cat="combos">Combos</button></div>
 
  <div class="menu-list" id="menuList"></div>
 
@@ -152,7 +152,7 @@
 
   <div class="admin-tools"><input id="reservationSearch" placeholder="Buscar por nome, data ou telefone"><button class="btn btn-outline" id="exportReservations">Exportar CSV</button><button class="btn btn-outline" id="logout">Sair</button></div>
 
-  <h3>Reservas recebidas</h3><p class="small-note">As solicitações ficam salvas no banco de dados e aparecem nos dispositivos autorizados.</p><div id="reservationList"></div><hr style="border-color:#38332b;margin:25px 0"><h3>Editar cardápio</h3><p class="small-note">Cadastre ou edite os itens reais do cardápio. Categorias: drinks, cervejas, comidas, semalcool.</p><form id="menuForm"><input type="hidden" id="menuId"><div class="field"><label for="menuName">Nome do item</label><input id="menuName" required maxlength="100"></div><div class="field"><label for="menuDescription">Descrição</label><input id="menuDescription" maxlength="250"></div><div class="formgrid"><div class="field"><label for="menuPrice">Preço (ex.: R$ 29,00)</label><input id="menuPrice" required maxlength="30"></div><div class="field"><label for="menuCategory">Categoria</label><select id="menuCategory"><option value="drinks">Drinks</option><option value="cervejas">Cervejas</option><option value="comidas">Para comer</option><option value="semalcool">Sem álcool</option></select></div></div><button class="btn btn-primary" type="submit">Salvar item</button> <button class="btn btn-outline" type="button" id="cancelMenuEdit">Limpar formulário</button></form><div id="adminMenuList"></div>
+  <h3>Reservas recebidas</h3><p class="small-note">As solicitações ficam salvas no banco de dados e aparecem nos dispositivos autorizados.</p><div id="reservationList"></div><hr style="border-color:#38332b;margin:25px 0"><h3>Editar cardápio</h3><p class="small-note">Cadastre ou edite os itens reais do cardápio. Categorias: drinks, cervejas, comidas, combos.</p><form id="menuForm"><input type="hidden" id="menuId"><div class="field"><label for="menuName">Nome do item</label><input id="menuName" required maxlength="100"></div><div class="field"><label for="menuDescription">Descrição</label><input id="menuDescription" maxlength="250"></div><div class="formgrid"><div class="field"><label for="menuPrice">Preço (ex.: R$ 29,00)</label><input id="menuPrice" required maxlength="30"></div><div class="field"><label for="menuCategory">Categoria</label><select id="menuCategory"><option value="drinks">Drinks</option><option value="cervejas">Cervejas</option><option value="comidas">Para comer</option><option value="combos">Combos</option></select></div></div><button class="btn btn-primary" type="submit">Salvar item</button> <button class="btn btn-outline" type="button" id="cancelMenuEdit">Limpar formulário</button></form><div id="adminMenuList"></div>
 
   <hr style="border-color:#38332b;margin:25px 0"><h3>Personalizar a galeria</h3><p class="small-note">Escolha uma foto do computador/celular para enviar ao Supabase ou informe uma URL pública HTTPS.</p>
 
@@ -210,7 +210,10 @@ function fallbackMenu(cat) {
 async function renderMenu(cat = currentCat) {
   currentCat = cat;
   document.querySelectorAll(".menu-tabs button").forEach(b => b.classList.toggle("active", b.dataset.cat === cat));
-  const {data, error} = await db.from("menu_items").select("id,name,description,price,category,position,active").eq("active", true).eq("category", cat).order("position", {ascending:true});
+  let query = db.from("menu_items").select("id,name,description,price,category,position,active").eq("active", true);
+  if (cat === "combos") query = query.in("category", ["combos", "semalcool"]);
+  else query = query.eq("category", cat);
+  const {data, error} = await query.order("position", {ascending:true});
  if (error) {
   $("#menuList").innerHTML = "<p>Não foi possível carregar o cardápio.</p>";
   console.error("Erro ao carregar cardápio:", error);
@@ -359,7 +362,7 @@ $("#menuForm").addEventListener("submit", async e => {
   e.preventDefault();
   if (!adminLoggedIn) return;
   const id = $("#menuId").value;
-  const item = {name:$("#menuName").value.trim(),description:$("#menuDescription").value.trim(),price:$("#menuPrice").value.trim(),category:$("#menuCategory").value,position:menuRows.length + 1};
+  const item = {name:$("#menuName").value.trim(),description:$("#menuDescription").value.trim(),price:$("#menuPrice").value.trim(),category:$("#menuCategory").value === "semalcool" ? "combos" : $("#menuCategory").value,position:menuRows.length + 1};
   if (!id) item.active = true;
   const result = id ? await db.from("menu_items").update(item).eq("id", Number(id)) : await db.from("menu_items").insert(item);
   if (result.error) { alert("Não foi possível salvar o item. Confira as permissões do Supabase."); return; }
