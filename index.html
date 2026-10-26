@@ -34,7 +34,7 @@
 
   <nav class="navlinks"><a href="#experiencia">A experiência</a><a href="#cardapio">Cardápio</a><a href="#galeria">Galeria</a><a href="#reservas">Reservas</a></nav>
 
-  <a class="btn btn-primary" href="#reservationForm" onclick="event.preventDefault(); const form = document.getElementById('reservationForm'); window.scrollTo({top: document.getElementById('reservationForm').getBoundingClientRect().top + window.scrollY - 100, behavior: 'smooth'}); history.replaceState(null, '', location.pathname + location.search);">Reservar agora</a>
+  <a class="btn btn-primary" href="#reservationForm" onclick="document.getElementById('reservationForm').scrollIntoView({behavior:'auto', block:'start'});">Reservar agora</a>
 
 </header>
 
