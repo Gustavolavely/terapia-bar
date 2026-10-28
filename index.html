@@ -282,7 +282,47 @@
       padding: 18px 0;
       border-bottom: 1px solid var(--line)
     }
+.product-card {
+  cursor: pointer;
+  align-items: center;
+}
 
+.product-card:hover h3 {
+  opacity: 0.75;
+}
+
+.product-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.product-thumb {
+  width: 76px;
+  height: 76px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.product-info small {
+  display: block;
+  margin-top: 7px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+@media (max-width: 600px) {
+  .menu-list {
+    grid-template-columns: 1fr;
+  }
+
+  .product-thumb {
+    width: 64px;
+    height: 64px;
+  }
+}
     .menu-item h3 {
       font-size: 16px;
       margin: 0 0 6px
@@ -749,7 +789,77 @@
         margin: 4px 0
       }
     }
-  </style>
+  
+.product-gallery-modal[hidden] { display: none !important; }
+.product-gallery-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+.product-gallery-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.82);
+}
+.product-gallery-dialog {
+  position: relative;
+  width: min(760px, 100%);
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #171717;
+  color: #fff;
+  z-index: 1;
+}
+.product-gallery-dialog h2 {
+  margin: 0 40px 18px 0;
+}
+.product-gallery-close {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-size: 32px;
+  cursor: pointer;
+}
+.product-gallery-stage {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) 42px;
+  align-items: center;
+  gap: 10px;
+}
+.product-gallery-stage img {
+  display: block;
+  width: 100%;
+  height: min(60vh, 520px);
+  object-fit: contain;
+}
+.product-gallery-stage button {
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  color: #fff;
+  background: #292929;
+  cursor: pointer;
+}
+#productGalleryCounter {
+  text-align: center;
+  color: #ccc;
+  margin-bottom: 0;
+}
+@media (max-width: 520px) {
+  .product-gallery-dialog { padding: 18px 10px; }
+  .product-gallery-stage { grid-template-columns: 32px minmax(0, 1fr) 32px; gap: 4px; }
+  .product-gallery-stage button { width: 30px; height: 36px; }
+}
+
+</style>
 
 </head>
 
@@ -1037,7 +1147,16 @@
                 <option value="comidas">Para comer</option>
                 <option value="combos">Combos</option>
                 <option value="diversos">Diversos</option>
-              </select></div>
+              </select></div><div class="field">
+  <label for="menuProductPhotos">Fotos do produto</label>
+  <input
+    type="file"
+    id="menuProductPhotos"
+    accept="image/*"
+    multiple
+  >
+  <small>Você pode selecionar várias imagens de uma vez.</small>
+</div>
           </div><button class="btn btn-primary" type="submit">Salvar item</button> <button class="btn btn-outline"
             type="button" id="cancelMenuEdit">Limpar formulário</button>
         </form>
@@ -1130,9 +1249,148 @@
         $("#menuList").innerHTML = "<p>Nenhum produto cadastrado nesta categoria.</p>";
         return;
       }
-      $("#menuList").innerHTML = data.map(i => `<div class="menu-item"><div><h3>${esc(i.name)}</h3><p>${esc(i.description)}</p></div><div class="price">${esc(i.price)}</div></div>`).join("");
+            const productIds = data.map(i => i.id);
+      const { data: photos, error: photosError } = await db
+        .from("menu_item_photos")
+        .select("id,menu_item_id,image_url,position")
+        .in("menu_item_id", productIds)
+        .order("position", { ascending: true });
+
+      if (photosError) {
+        console.error("Erro ao carregar fotos dos produtos:", photosError);
+      }
+
+      const photosByProduct = {};
+      (photos || []).forEach(photo => {
+        if (!photosByProduct[photo.menu_item_id]) {
+          photosByProduct[photo.menu_item_id] = [];
+        }
+        photosByProduct[photo.menu_item_id].push(photo);
+      });
+
+      $("#menuList").innerHTML = data.map(i => {
+        const productPhotos = photosByProduct[i.id] || [];
+        const cover = productPhotos[0]?.image_url;
+
+        return `
+          <div class="menu-item product-card"
+               data-product-id="${Number(i.id)}"
+               role="button"
+               tabindex="0"
+               aria-label="Ver fotos de ${esc(i.name)}">
+            <div class="product-info">
+              ${cover ? `<img class="product-thumb" src="${esc(cover)}" alt="${esc(i.name)}" loading="lazy">` : ""}
+              <div>
+                <h3>${esc(i.name)}</h3>
+                <p>${esc(i.description)}</p>
+                ${productPhotos.length ? `<small>${productPhotos.length} foto(s) · Ver galeria</small>` : ""}
+              </div>
+            </div>
+            <div class="price">${esc(i.price)}</div>
+          </div>`;
+      }).join("");
     }
-    document.querySelectorAll(".menu-tabs button").forEach(b => b.addEventListener("click", () => renderMenu(b.dataset.cat)));
+    
+    // Galeria de fotos dos produtos do cardápio
+    let activeProductPhotos = [];
+    let activeProductPhotoIndex = 0;
+
+    function displayProductPhoto() {
+      const image = document.getElementById("productGalleryImage");
+      const counter = document.getElementById("productGalleryCounter");
+      const prev = document.getElementById("productGalleryPrev");
+      const next = document.getElementById("productGalleryNext");
+      if (!image || !counter || !activeProductPhotos.length) return;
+
+      const photo = activeProductPhotos[activeProductPhotoIndex];
+      image.src = photo.image_url;
+      image.alt = document.getElementById("productGalleryTitle").textContent;
+      counter.textContent = `${activeProductPhotoIndex + 1} / ${activeProductPhotos.length}`;
+      prev.disabled = activeProductPhotos.length < 2;
+      next.disabled = activeProductPhotos.length < 2;
+    }
+
+    async function openProductGallery(card) {
+      const productId = Number(card.dataset.productId);
+      const title = card.querySelector("h3")?.textContent || "Fotos do produto";
+
+      const { data, error } = await db
+        .from("menu_item_photos")
+        .select("image_url,position")
+        .eq("menu_item_id", productId)
+        .order("position", { ascending: true });
+
+      if (error) {
+        console.error("Erro ao carregar fotos do produto:", error);
+        alert("Não foi possível carregar as fotos deste produto.");
+        return;
+      }
+      if (!data || data.length === 0) {
+        alert("Este produto ainda não tem fotos cadastradas.");
+        return;
+      }
+
+      activeProductPhotos = data;
+      activeProductPhotoIndex = 0;
+      document.getElementById("productGalleryTitle").textContent = title;
+      document.getElementById("productGalleryModal").hidden = false;
+      document.body.style.overflow = "hidden";
+      displayProductPhoto();
+    }
+
+    function closeProductGallery() {
+      const modal = document.getElementById("productGalleryModal");
+      const image = document.getElementById("productGalleryImage");
+      if (modal) modal.hidden = true;
+      if (image) image.src = "";
+      document.body.style.overflow = "";
+    }
+
+    function moveProductGallery(direction) {
+      if (!activeProductPhotos.length) return;
+      activeProductPhotoIndex =
+        (activeProductPhotoIndex + direction + activeProductPhotos.length) % activeProductPhotos.length;
+      displayProductPhoto();
+    }
+
+    // Delegação de eventos funciona mesmo quando o cardápio é redesenhado.
+    document.addEventListener("click", event => {
+      const closeButton = event.target.closest("[data-close-gallery]");
+      if (closeButton) {
+        closeProductGallery();
+        return;
+      }
+
+      if (event.target.closest("#productGalleryPrev")) {
+        moveProductGallery(-1);
+        return;
+      }
+      if (event.target.closest("#productGalleryNext")) {
+        moveProductGallery(1);
+        return;
+      }
+
+      const card = event.target.closest("#menuList .product-card");
+      if (card) openProductGallery(card);
+    });
+
+    document.addEventListener("keydown", event => {
+      const modal = document.getElementById("productGalleryModal");
+      if (modal && !modal.hidden) {
+        if (event.key === "Escape") closeProductGallery();
+        if (event.key === "ArrowLeft") moveProductGallery(-1);
+        if (event.key === "ArrowRight") moveProductGallery(1);
+        return;
+      }
+
+      const card = event.target.closest?.("#menuList .product-card");
+      if (card && (event.key === "Enter" || event.key === " ")) {
+        event.preventDefault();
+        openProductGallery(card);
+      }
+    });
+
+document.querySelectorAll(".menu-tabs button").forEach(b => b.addEventListener("click", () => renderMenu(b.dataset.cat)));
     $("#year").textContent = new Date().getFullYear();
     const dateInput = $("#date");
     const now = new Date();
@@ -1276,15 +1534,98 @@
     }
     $("#menuForm").addEventListener("submit", async e => {
       e.preventDefault();
+      const formElement = e.currentTarget;
       if (!adminLoggedIn) return;
+
       const id = $("#menuId").value;
-      const item = { name: $("#menuName").value.trim(), description: $("#menuDescription").value.trim(), price: $("#menuPrice").value.trim(), category: $("#menuCategory").value === "semalcool" ? "combos" : $("#menuCategory").value, position: menuRows.length + 1 };
+      const files = Array.from($("#menuProductPhotos").files || []);
+      const item = {
+        name: $("#menuName").value.trim(),
+        description: $("#menuDescription").value.trim(),
+        price: $("#menuPrice").value.trim(),
+        category: $("#menuCategory").value === "semalcool" ? "combos" : $("#menuCategory").value,
+        position: menuRows.length + 1
+      };
+
       if (!id) item.active = true;
-      const result = id ? await db.from("menu_items").update(item).eq("id", Number(id)) : await db.from("menu_items").insert(item);
-      if (result.error) { alert("Não foi possível salvar o item. Confira as permissões do Supabase."); return; }
-      e.currentTarget.reset();
-      $("#menuId").value = "";
-      await Promise.all([loadAdminMenu(), renderMenu(currentCat)]);
+
+      for (const file of files) {
+        if (!file.type.startsWith("image/")) {
+          alert("Selecione apenas arquivos de imagem.");
+          return;
+        }
+        if (file.size > 8 * 1024 * 1024) {
+          alert("Cada imagem deve ter no máximo 8 MB.");
+          return;
+        }
+      }
+
+      const submitButton = e.currentTarget.querySelector('button[type="submit"]');
+      submitButton.disabled = true;
+      submitButton.textContent = "Salvando produto...";
+
+      try {
+        let productId = id ? Number(id) : null;
+
+        if (id) {
+          const { error } = await db.from("menu_items").update(item).eq("id", productId);
+          if (error) throw error;
+        } else {
+          const { data, error } = await db.from("menu_items").insert(item).select("id").single();
+          if (error) throw error;
+          productId = data.id;
+        }
+
+        for (let index = 0; index < files.length; index++) {
+          const file = files[index];
+          const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "-");
+          const path = `products/${productId}/${Date.now()}-${index}-${safeName}`;
+
+          const { error: uploadError } = await db.storage
+            .from("terapia-fotos")
+            .upload(path, file, { upsert: false, contentType: file.type });
+
+          if (uploadError) throw uploadError;
+
+          const { data: publicData } = db.storage
+            .from("terapia-fotos")
+            .getPublicUrl(path);
+
+          const { data: existingPhotos, error: listError } = await db
+            .from("menu_item_photos")
+            .select("position")
+            .eq("menu_item_id", productId)
+            .order("position", { ascending: false })
+            .limit(1);
+
+          if (listError) throw listError;
+
+          const nextPosition = existingPhotos?.length
+            ? Number(existingPhotos[0].position) + 1
+            : 0;
+
+          const { error: photoError } = await db
+            .from("menu_item_photos")
+            .insert({
+              menu_item_id: productId,
+              image_url: publicData.publicUrl,
+              position: nextPosition
+            });
+
+          if (photoError) throw photoError;
+        }
+
+        formElement.reset();
+        $("#menuId").value = "";
+        await Promise.all([loadAdminMenu(), renderMenu(currentCat)]);
+        alert("Produto salvo com sucesso!");
+      } catch (error) {
+        console.error("Erro ao salvar produto ou fotos:", error);
+        alert("O produto ou alguma foto não pôde ser salva. Confira o console e as permissões do Supabase.");
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = "Salvar item";
+      }
     });
     $("#cancelMenuEdit").addEventListener("click", () => { $("#menuForm").reset(); $("#menuId").value = ""; });
     window.editMenuItem = id => {
@@ -1412,6 +1753,21 @@
       }
     })();
   </script>
+
+
+<div id="productGalleryModal" class="product-gallery-modal" hidden>
+  <div class="product-gallery-backdrop" data-close-gallery></div>
+  <section class="product-gallery-dialog" role="dialog" aria-modal="true" aria-labelledby="productGalleryTitle">
+    <button type="button" class="product-gallery-close" data-close-gallery aria-label="Fechar galeria">&times;</button>
+    <h2 id="productGalleryTitle"></h2>
+    <div class="product-gallery-stage">
+      <button type="button" id="productGalleryPrev" aria-label="Foto anterior">&#10094;</button>
+      <img id="productGalleryImage" src="" alt="">
+      <button type="button" id="productGalleryNext" aria-label="Próxima foto">&#10095;</button>
+    </div>
+    <p id="productGalleryCounter"></p>
+  </section>
+</div>
 
 </body>
 
