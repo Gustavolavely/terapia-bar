@@ -1531,30 +1531,49 @@ document.querySelectorAll(".menu-tabs button").forEach(b => b.addEventListener("
       const filtered = (data || []).filter(r => [r.name, r.phone, r.reservation_date, r.reservation_time, r.reservation_type, r.status].join(" ").toLowerCase().includes(q));
       $("#reservationList").innerHTML = filtered.length ? filtered.map(r => `<div class="reservation-row"><strong>${esc(r.name)}</strong> · ${esc(r.status)}<p class="small-note">📅 ${esc(r.reservation_date)} às ${esc(String(r.reservation_time || "").slice(0, 5))} · 👥 ${esc(r.people)} · ${esc(r.reservation_type)}<br>📱 WhatsApp: ${esc(r.phone)}${r.notes ? `<br>Observações: ${esc(r.notes)}` : ""}</p><div class="row-actions"><button class="btn btn-outline" onclick="openReservationWhatsApp('${encodeURIComponent(JSON.stringify({name:r.name,phone:r.phone,reservation_date:r.reservation_date,reservation_time:r.reservation_time,people:r.people,reservation_type:r.reservation_type,notes:r.notes,status:r.status})).replace(/'/g, "%27")}')">Chamar no WhatsApp</button><button class="btn btn-outline" onclick="setStatus(${Number(r.id)},'Confirmada')">Marcar confirmada</button><button class="btn btn-outline" onclick="setStatus(${Number(r.id)},'Cancelada')">Cancelar</button><button class="btn danger" onclick="deleteReservation(${Number(r.id)})">Excluir</button></div></div>`).join("") : '<p class="empty">Nenhuma reserva encontrada.</p>';
     }
-    window.openReservationWhatsApp = encodedReservation => {
-      let reservation;
-      try { reservation = JSON.parse(decodeURIComponent(encodedReservation)); }
-      catch (e) { alert("Não foi possível carregar os dados desta reserva."); return; }
-      let number = String(reservation.phone || "").replace(/\D/g, "");
-      if (number.length === 10 || number.length === 11) number = "55" + number;
-      if (number.length < 12 || number.length > 13 || !number.startsWith("55")) {
-        alert("Confira o número de WhatsApp desta reserva. Informe o DDD e o número completo.");
-        return;
-      }
-      const message = [
-        `Olá, ${reservation.name || "tudo bem"}! Aqui é do TERAPIA Bar.`,
-        "",
-        "Recebemos sua solicitação de reserva. *Pode conferir se os dados abaixo estão corretos?*",
-        `*Data:* ${reservation.reservation_date || "Não informada"}`,
-        `*Horário:* ${String(reservation.reservation_time || "").slice(0, 5) || "Não informado"}`,
-        `*Quantidade de pessoas:* ${reservation.people ?? "Não informada"}`,
-        `*Tipo de reserva:* ${reservation.reservation_type || "Não informado"}`,
-        `*Observações que você enviou:* ${reservation.notes ? reservation.notes : "Nenhuma observação informada"}`,
-        "",
-        "Está tudo certo assim?"
-      ].join("\n");
-      window.open("https://wa.me/" + number + "?text=" + encodeURIComponent(message), "_blank", "noopener,noreferrer");
-    };
+   window.openReservationWhatsApp = encodedReservation => {
+  let reservation;
+
+  try {
+    reservation = JSON.parse(decodeURIComponent(encodedReservation));
+  } catch (e) {
+    alert("Não foi possível carregar os dados desta reserva.");
+    return;
+  }
+
+  let number = String(reservation.phone || "").replace(/\D/g, "");
+
+  if (number.length === 10 || number.length === 11) {
+    number = "55" + number;
+  }
+
+  if (number.length < 12 || number.length > 13 || !number.startsWith("55")) {
+    alert("Confira o número de WhatsApp desta reserva. Informe o DDD e o número completo.");
+    return;
+  }
+
+  const nome = reservation.name || "tudo bem";
+  const data = reservation.reservation_date || "Não informada";
+  const horario = reservation.reservation_time || "Não informado";
+  const pessoas = reservation.people ?? "Não informado";
+  const tipo = reservation.reservation_type || "Não informado";
+  const observacoes = String(reservation.notes || "").trim() || "Nenhuma observação informada";
+
+  const mensagem =
+    `Olá, ${nome}! Aqui é do TERAPIA Bar.\n\n` +
+    `Recebemos sua solicitação de reserva. Confira os dados abaixo:\n\n` +
+    `📅 *Data:* ${data}\n` +
+    `🕒 *Horário:* ${horario}\n` +
+    `👥 *Quantidade de pessoas:* ${pessoas}\n` +
+    `📍 *Tipo de reserva:* ${tipo}\n` +
+    `📝 *Observações:* ${observacoes}\n\n` +
+    `Está tudo certo assim?`;
+
+  const url = `https://wa.me/${number}?text=${encodeURIComponent(mensagem)}`;
+
+  window.open(url, "_blank");
+};
+
 
     window.setStatus = async (id, status) => {
       if (!adminLoggedIn) return;
