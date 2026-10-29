@@ -859,11 +859,54 @@
   .product-gallery-stage button { width: 30px; height: 36px; }
 }
 
+
+
+/* Halloween ambience across the entire site */
+#halloweenAtmosphere{position:fixed;inset:0;z-index:9000;pointer-events:none;overflow:hidden;}
+#halloweenAtmosphere .web-corner{position:absolute;width:clamp(90px,18vw,220px);height:clamp(90px,18vw,220px);opacity:.48;}
+#halloweenAtmosphere .web-corner svg{width:100%;height:100%;overflow:visible;filter:drop-shadow(0 0 4px #f18a3540)}
+#halloweenAtmosphere .web-left{top:0;left:0} #halloweenAtmosphere .web-right{top:0;right:0;transform:scaleX(-1)}
+#halloweenAtmosphere .web-bottom{bottom:0;right:0;transform:rotate(180deg);opacity:.28}
+#halloweenAtmosphere .ambient-fog{position:absolute;left:-20%;right:-20%;bottom:-4%;height:25vh;min-height:130px;background:radial-gradient(ellipse at 20% 70%,#b6b2ad30,transparent 52%),radial-gradient(ellipse at 70% 65%,#d2c7ba25,transparent 54%),radial-gradient(ellipse at 50% 100%,#f0782720,transparent 65%);filter:blur(14px);animation:siteFogDrift 18s ease-in-out infinite alternate}
+#halloweenAtmosphere .floating-pumpkin{position:absolute;bottom:-70px;font-size:clamp(24px,3vw,42px);filter:drop-shadow(0 0 12px #f0782740);opacity:0;animation:pumpkinFloat 22s linear infinite}
+#halloweenAtmosphere .p1{left:8%;animation-delay:-4s} #halloweenAtmosphere .p2{left:72%;font-size:26px;animation-delay:-13s;animation-duration:27s} #halloweenAtmosphere .p3{left:43%;font-size:20px;animation-delay:-19s;animation-duration:25s}
+@keyframes siteFogDrift{from{transform:translateX(-4%) scale(1);opacity:.55}to{transform:translateX(5%) scale(1.12);opacity:1}}
+@keyframes pumpkinFloat{0%{transform:translateY(0) rotate(-12deg);opacity:0}10%{opacity:.72}80%{opacity:.65}100%{transform:translateY(-115vh) rotate(24deg);opacity:0}}
+@media(max-width:600px){#halloweenAtmosphere .web-corner{width:100px;height:100px;opacity:.35}#halloweenAtmosphere .ambient-fog{height:18vh}}
+@media(prefers-reduced-motion:reduce){#halloweenAtmosphere .ambient-fog,#halloweenAtmosphere .floating-pumpkin{animation:none!important}}
+
+/* TERAPIA BAR — abertura cinematográfica de Halloween */
+#halloweenIntro{position:fixed;inset:0;z-index:99999;display:grid;place-items:center;overflow:hidden;background:radial-gradient(circle at 50% 28%,#63351d 0,#24130f 28%,#090909 72%);color:#fff;text-align:center;isolation:isolate;transition:opacity .9s ease,visibility .9s ease}
+#halloweenIntro.is-hidden{opacity:0;visibility:hidden;pointer-events:none}
+#halloweenIntro .moon{position:absolute;width:min(38vw,310px);aspect-ratio:1;border-radius:50%;top:7%;left:50%;transform:translateX(-50%);background:radial-gradient(circle at 35% 32%,#fff1c7,#d6a66b 58%,#8b512f);box-shadow:0 0 35px #e99a4b99,0 0 120px #d96b2c55;opacity:.9}
+#halloweenIntro .trees{position:absolute;inset:0;opacity:.85;background:linear-gradient(180deg,transparent 45%,#080807 78%),linear-gradient(75deg,transparent 0 12%,#050505 12.2% 14%,transparent 14.2% 86%,#050505 86.2% 88%,transparent 88.2%);pointer-events:none}
+#halloweenIntro .fog{position:absolute;left:-25%;right:-25%;height:28%;bottom:7%;background:radial-gradient(ellipse at center,#c9c1b533,transparent 68%);filter:blur(18px);animation:halloweenFog 9s ease-in-out infinite alternate}
+#halloweenIntro .fog.fog2{bottom:0;opacity:.65;animation-delay:-4s;animation-duration:13s}
+#halloweenIntro .intro-content{position:relative;z-index:2;padding:24px;transform:translateY(6vh);animation:halloweenRise 1.4s ease both}
+#halloweenIntro .intro-kicker{font-size:.75rem;letter-spacing:.42em;text-transform:uppercase;color:#f3b16b;margin-bottom:18px}
+#halloweenIntro h1{font-family:Georgia,serif;font-size:clamp(3rem,10vw,7.5rem);letter-spacing:.08em;line-height:.95;margin:0;text-shadow:0 4px 30px #000,0 0 24px #f07827a8}
+#halloweenIntro h1 span{color:#f18a35}
+#halloweenIntro .intro-sub{font-size:clamp(.9rem,2vw,1.1rem);letter-spacing:.16em;text-transform:uppercase;color:#e9d5c3;margin:22px 0 30px}
+#halloweenEnter{border:1px solid #f18a35;background:#b84b18;color:#fff;padding:15px 30px;border-radius:2px;font:inherit;font-size:.82rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;box-shadow:0 0 30px #e66a2944;transition:transform .2s,background .2s}
+#halloweenEnter:hover{transform:translateY(-2px);background:#d65d1e}
+#halloweenIntro .pumpkins{position:absolute;z-index:2;bottom:2%;left:0;right:0;display:flex;justify-content:space-between;padding:0 5%;font-size:clamp(2.5rem,7vw,5rem);filter:drop-shadow(0 0 18px #e56b2b55);pointer-events:none}
+@keyframes halloweenFog{from{transform:translateX(-7%) scale(1);opacity:.45}to{transform:translateX(7%) scale(1.2);opacity:.9}}
+@keyframes halloweenRise{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:translateY(6vh)}}
+@media(prefers-reduced-motion:reduce){#halloweenIntro *,#halloweenIntro .intro-content{animation:none!important;transition:none!important}}
+
 </style>
 
 </head>
 
 <body>
+
+<div id="halloweenAtmosphere" aria-hidden="true">
+  <div class="web-corner web-left"><svg viewBox="0 0 200 200" fill="none" stroke="#d9c6b4" stroke-width="1.15"><path d="M0 0 L200 200 M0 0 L200 100 M0 0 L100 200 M0 0 L200 0 M0 0 L0 200"/><path d="M20 0 Q18 18 0 20 M48 0 Q44 44 0 48 M78 0 Q70 70 0 78 M108 0 Q96 96 0 108 M138 0 Q122 122 0 138 M168 0 Q148 148 0 168 M0 20 Q20 18 20 0 M0 48 Q44 44 48 0 M0 78 Q70 70 78 0 M0 108 Q96 96 108 0 M0 138 Q122 122 138 0 M0 168 Q148 148 168 0"/></svg></div>
+  <div class="web-corner web-right"><svg viewBox="0 0 200 200" fill="none" stroke="#d9c6b4" stroke-width="1.15"><path d="M0 0 L200 200 M0 0 L200 100 M0 0 L100 200 M0 0 L200 0 M0 0 L0 200"/><path d="M20 0 Q18 18 0 20 M48 0 Q44 44 0 48 M78 0 Q70 70 0 78 M108 0 Q96 96 0 108 M138 0 Q122 122 0 138 M168 0 Q148 148 0 168"/></svg></div>
+  <div class="web-corner web-bottom"><svg viewBox="0 0 200 200" fill="none" stroke="#d9c6b4" stroke-width="1.15"><path d="M0 0 L200 200 M0 0 L200 100 M0 0 L100 200 M0 0 L200 0 M0 0 L0 200"/><path d="M20 0 Q18 18 0 20 M48 0 Q44 44 0 48 M78 0 Q70 70 0 78 M108 0 Q96 96 0 108 M138 0 Q122 122 0 138 M168 0 Q148 148 0 168"/></svg></div>
+  <div class="ambient-fog"></div><span class="floating-pumpkin p1">🎃</span><span class="floating-pumpkin p2">🎃</span><span class="floating-pumpkin p3">🎃</span>
+</div>
+
 
   <div class="topbar">
     <div class="wrap"><span>✦ TERAPIA BAR · seu refúgio da rotina</span><span>Reservas online · Dúvidas: (11)
@@ -1768,6 +1811,26 @@ document.querySelectorAll(".menu-tabs button").forEach(b => b.addEventListener("
     <p id="productGalleryCounter"></p>
   </section>
 </div>
+
+
+<div id="halloweenIntro" aria-label="Entrada especial de Halloween do TERAPIA Bar">
+  <div class="moon" aria-hidden="true"></div><div class="trees" aria-hidden="true"></div>
+  <div class="fog" aria-hidden="true"></div><div class="fog fog2" aria-hidden="true"></div>
+  <div class="intro-content"><div class="intro-kicker">Uma noite fora do comum</div><h1>TERAPIA<span>.</span></h1><p class="intro-sub">Entre se tiver coragem.</p><button id="halloweenEnter" type="button">Entrar no site ↗</button></div>
+  <div class="pumpkins" aria-hidden="true"><span>🎃</span><span>🎃</span></div>
+</div>
+<script>
+(() => {
+  const intro = document.getElementById('halloweenIntro');
+  const enter = document.getElementById('halloweenEnter');
+  if (!intro || !enter) return;
+  try { if (localStorage.getItem('terapiaHalloweenIntroSeen') === '1') intro.classList.add('is-hidden'); } catch (_) {}
+  enter.addEventListener('click', () => {
+    intro.classList.add('is-hidden');
+    try { localStorage.setItem('terapiaHalloweenIntroSeen', '1'); } catch (_) {}
+  });
+})();
+</script>
 
 </body>
 
