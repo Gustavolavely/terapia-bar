@@ -896,6 +896,23 @@
 
 </style>
 
+
+  <!-- OneSignal Web Push: serviço hospedado na subpasta do GitHub Pages -->
+  <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+  <script>
+    window.OneSignalDeferred = window.OneSignalDeferred || [];
+    OneSignalDeferred.push(async function(OneSignal) {
+      try {
+        await OneSignal.init({
+          appId: "3e5dc18a-6eb0-43fb-8f5b-e1699dfb7594",
+          serviceWorkerPath: "/BARTERAPIA/OneSignalSDKWorker.js",
+          serviceWorkerParam: { scope: "/BARTERAPIA/" }
+        });
+      } catch (error) {
+        console.error("Falha ao inicializar notificações OneSignal:", error);
+      }
+    });
+  </script>
 </head>
 
 <body>
@@ -1163,6 +1180,11 @@
       </div>
 
        <div class="admin-content" id="adminContent">
+        <hr style="border-color:#38332b;margin:25px 0">
+        <h3>Notificações de reservas 🔔</h3>
+        <p class="small-note">Ative as notificações neste dispositivo para receber avisos quando o envio automático estiver configurado.</p>
+        <div class="onesignal-customlink-container"></div>
+
 
           <div class="admin-tools"><input id="reservationSearch" placeholder="Buscar por nome, data ou telefone"><button
             class="btn btn-outline" id="exportReservations">Exportar CSV</button><button class="btn btn-outline"
