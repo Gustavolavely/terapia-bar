@@ -9,3 +9,4 @@ TERAPIA BAR — OneSignal
 IMPORTANTE: isso registra o navegador para notificações. O envio automático ao receber novas reservas exige uma integração servidor (Supabase Edge Function + Database Webhook), com credenciais secretas guardadas no servidor.
 
 No iPhone, web push exige iOS/iPadOS 16.4+ e o site adicionado à Tela de Início como aplicativo web; GitHub Pages em subpasta pode precisar de manifest e ícones adequados para essa experiência.
+Atualização de publicação - TERAPIA BAR
