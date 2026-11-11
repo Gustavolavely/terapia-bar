@@ -1257,6 +1257,60 @@
     const SUPABASE_URL = "https://cvhdksxoupitjgouohbl.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_1FNkeVeNr7vC3b0WfK0sKQ_ZfR5SlmN";
     const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    
+async function registrarCelularAdmin() {
+  const { data: { user }, error } = await db.auth.getUser();
+
+  if (error || !user) return;
+
+  const { error: accessError } = await db
+    .from("reservations")
+    .select("id")
+    .limit(1);
+
+  if (accessError) return;
+
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+
+  window.OneSignalDeferred.push(async function(OneSignal) {
+  OneSignal.User.PushSubscription.addEventListener("change", async function(event) {
+  if (!adminLoggedIn) return;
+
+  const id = event.current.id;
+  if (!id || !event.current.optedIn) return;
+
+  const { data: { user } } = await db.auth.getUser();
+  if (!user) return;
+
+  const { error } = await db
+    .from("admin_push_subscriptions")
+    .upsert({
+      subscription_id: id,
+      user_id: user.id,
+      updated_at: new Date().toISOString()
+    });
+
+  if (error) console.error("Erro ao cadastrar iPhone:", error);
+});
+    const subscriptionId = OneSignal.User.PushSubscription.id;
+
+    if (!subscriptionId || !OneSignal.User.PushSubscription.optedIn) {
+      return;
+    }
+
+    const { error: saveError } = await db
+      .from("admin_push_subscriptions")
+     .upsert({
+        subscription_id: subscriptionId,
+        user_id: user.id
+      });
+
+    if (saveError && saveError.code !== "23505") {
+      console.error("Erro ao cadastrar notificações:", saveError);
+    }
+  });
+}
+
 
     const MENU = {
       drinks: [
@@ -1526,6 +1580,7 @@ document.querySelectorAll(".menu-tabs button").forEach(b => b.addEventListener("
         return;
       }
       adminLoggedIn = true;
+      registrarCelularAdmin();
       $("#loginArea").style.display = "none";
       $("#adminContent").style.display = "block";
       btn.disabled = false;
