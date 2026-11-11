@@ -1408,65 +1408,71 @@ async function registrarCelularAdmin() {
     function fallbackMenu(cat) {
       return (MENU[cat] || []).map(i => `<div class="menu-item"><div><h3>${esc(i.name)}</h3><p>${esc(i.desc)}</p></div><div class="price">${esc(i.price)}</div></div>`).join("");
     }
+    // Cache de curta duração: abas e galerias reutilizam os mesmos dados.
+    let menuCache = null;
+    let menuCachePromise = null;
+    let menuRequestNumber = 0;
+    const MENU_CACHE_MS = 60000;
+    function invalidateMenuCache() { menuCache = null; menuCachePromise = null; }
+    async function getMenuData() {
+      if (menuCache && Date.now() - menuCache.timestamp < MENU_CACHE_MS) return menuCache;
+      if (menuCachePromise) return menuCachePromise;
+      menuCachePromise = (async () => {
+        const { data: products, error: productsError } = await db.from("menu_items")
+          .select("id,name,description,price,category,position,active")
+          .eq("active", true).order("position", {ascending:true});
+        if (productsError) throw productsError;
+        const photosByProduct = {};
+        const ids = (products || []).map(p => p.id);
+        // Consulta em lotes, para não exceder limites de URL ou paginação do Supabase.
+        const requests = [];
+        for (let i = 0; i < ids.length; i += 100) {
+          requests.push(db.from("menu_item_photos")
+            .select("id,menu_item_id,image_url,position")
+            .in("menu_item_id", ids.slice(i, i + 100))
+            .order("position", {ascending:true}));
+        }
+        const results = await Promise.all(requests);
+        for (const result of results) {
+          if (result.error) throw result.error;
+          for (const photo of (result.data || [])) {
+            (photosByProduct[photo.menu_item_id] ||= []).push(photo);
+          }
+        }
+        const result = {products: products || [], photosByProduct, timestamp:Date.now()};
+        menuCache = result;
+        return result;
+      })();
+      try { return await menuCachePromise; }
+      finally { menuCachePromise = null; }
+    }
     async function renderMenu(cat = currentCat) {
       currentCat = cat;
+      const requestNumber = ++menuRequestNumber;
       document.querySelectorAll(".menu-tabs button").forEach(b => b.classList.toggle("active", b.dataset.cat === cat));
-      let query = db.from("menu_items").select("id,name,description,price,category,position,active").eq("active", true);
-      if (cat === "combos") query = query.in("category", ["combos", "semalcool"]);
-      else query = query.eq("category", cat);
-      const { data, error } = await query.order("position", { ascending: true });
-      if (error) {
-        $("#menuList").innerHTML = "<p>Não foi possível carregar o cardápio.</p>";
-        console.error("Erro ao carregar cardápio:", error);
-        return;
-      }
-
-      if (!data || data.length === 0) {
-        $("#menuList").innerHTML = "<p>Nenhum produto cadastrado nesta categoria.</p>";
-        return;
-      }
-            const productIds = data.map(i => i.id);
-      const { data: photos, error: photosError } = await db
-        .from("menu_item_photos")
-        .select("id,menu_item_id,image_url,position")
-        .in("menu_item_id", productIds)
-        .order("position", { ascending: true });
-
-      if (photosError) {
-        console.error("Erro ao carregar fotos dos produtos:", photosError);
-      }
-
-      const photosByProduct = {};
-      (photos || []).forEach(photo => {
-        if (!photosByProduct[photo.menu_item_id]) {
-          photosByProduct[photo.menu_item_id] = [];
-        }
-        photosByProduct[photo.menu_item_id].push(photo);
-      });
-
-      $("#menuList").innerHTML = data.map(i => {
-        const productPhotos = photosByProduct[i.id] || [];
-        const cover = productPhotos[0]?.image_url;
-
-        return `
-          <div class="menu-item product-card"
-               data-product-id="${Number(i.id)}"
-               role="button"
-               tabindex="0"
-               aria-label="Ver fotos de ${esc(i.name)}">
+      const list = $("#menuList");
+      if (!menuCache) list.innerHTML = '<p class="small-note">Carregando cardápio...</p>';
+      try {
+        const {products, photosByProduct} = await getMenuData();
+        if (requestNumber !== menuRequestNumber) return;
+        const data = products.filter(i => cat === "combos" ? ["combos", "semalcool"].includes(i.category) : i.category === cat);
+        if (!data.length) { list.innerHTML = '<p>Nenhum produto cadastrado nesta categoria.</p>'; return; }
+        list.innerHTML = data.map(i => {
+          const productPhotos = photosByProduct[i.id] || [];
+          const cover = productPhotos[0]?.image_url;
+          return `<div class="menu-item product-card" data-product-id="${Number(i.id)}" role="button" tabindex="0" aria-label="Ver fotos de ${esc(i.name)}">
             <div class="product-info">
-              ${cover ? `<img class="product-thumb" src="${esc(cover)}" alt="${esc(i.name)}" loading="lazy">` : ""}
-              <div>
-                <h3>${esc(i.name)}</h3>
-                <p>${esc(i.description)}</p>
-                ${productPhotos.length ? `<small>${productPhotos.length} foto(s) · Ver galeria</small>` : ""}
-              </div>
-            </div>
-            <div class="price">${esc(i.price)}</div>
-          </div>`;
-      }).join("");
+              ${cover ? `<img class="product-thumb" src="${esc(cover)}" alt="${esc(i.name)}" loading="lazy" decoding="async">` : ""}
+              <div><h3>${esc(i.name)}</h3><p>${esc(i.description)}</p>${productPhotos.length ? `<small>${productPhotos.length} foto(s) · Ver galeria</small>` : ""}</div>
+            </div><div class="price">${esc(i.price)}</div></div>`;
+        }).join("");
+      } catch(error) {
+        if (requestNumber !== menuRequestNumber) return;
+        console.error("Erro ao carregar cardápio:",error);
+        list.innerHTML = '<p>Não foi possível carregar o cardápio.</p>';
+      }
     }
-    
+
     // Galeria de fotos dos produtos do cardápio
     let activeProductPhotos = [];
     let activeProductPhotoIndex = 0;
@@ -1489,29 +1495,19 @@ async function registrarCelularAdmin() {
     async function openProductGallery(card) {
       const productId = Number(card.dataset.productId);
       const title = card.querySelector("h3")?.textContent || "Fotos do produto";
-
-      const { data, error } = await db
-        .from("menu_item_photos")
-        .select("image_url,position")
-        .eq("menu_item_id", productId)
-        .order("position", { ascending: true });
-
-      if (error) {
-        console.error("Erro ao carregar fotos do produto:", error);
-        alert("Não foi possível carregar as fotos deste produto.");
-        return;
-      }
-      if (!data || data.length === 0) {
-        alert("Este produto ainda não tem fotos cadastradas.");
-        return;
-      }
-
-      activeProductPhotos = data;
-      activeProductPhotoIndex = 0;
-      document.getElementById("productGalleryTitle").textContent = title;
-      document.getElementById("productGalleryModal").hidden = false;
-      document.body.style.overflow = "hidden";
-      displayProductPhoto();
+      try {
+        const {photosByProduct} = await getMenuData();
+        const data = photosByProduct[productId] || [];
+        if (!data.length) { alert("Este produto ainda não tem fotos cadastradas."); return; }
+        activeProductPhotos = data;
+        activeProductPhotoIndex = 0;
+        document.getElementById("productGalleryTitle").textContent = title;
+        document.getElementById("productGalleryModal").hidden = false;
+        document.body.style.overflow = "hidden";
+        displayProductPhoto();
+        // Pré-carrega as próximas imagens para navegação mais rápida.
+        data.slice(1, 4).forEach(photo => { const img = new Image(); img.src = photo.image_url; });
+      } catch(error) { console.error(error); alert("Não foi possível carregar as fotos do produto."); }
     }
 
     function closeProductGallery() {
@@ -1863,6 +1859,7 @@ document.querySelectorAll(".menu-tabs button").forEach(b => b.addEventListener("
         formElement.reset();
         $("#menuId").value = "";
         $("#adminProductEditor").open = false;
+        invalidateMenuCache();
         await Promise.all([loadAdminMenu(), renderMenu(currentCat)]);
         alert("Produto salvo com sucesso!");
       } catch (error) {
@@ -1890,13 +1887,13 @@ document.querySelectorAll(".menu-tabs button").forEach(b => b.addEventListener("
       if (!adminLoggedIn) return;
       const { error } = await db.from("menu_items").update({ active }).eq("id", id);
       if (error) alert("Não foi possível alterar o item.");
-      else { await loadAdminMenu(); await renderMenu(currentCat); }
+      else { invalidateMenuCache(); await loadAdminMenu(); await renderMenu(currentCat); }
     };
     window.deleteMenuItem = async id => {
       if (!adminLoggedIn || !confirm("Excluir este item do cardápio?")) return;
       const { error } = await db.from("menu_items").delete().eq("id", id);
       if (error) alert("Não foi possível excluir o item.");
-      else { await loadAdminMenu(); await renderMenu(currentCat); }
+      else { invalidateMenuCache(); await loadAdminMenu(); await renderMenu(currentCat); }
     };
 
     function initGallerySlider() {
@@ -2035,8 +2032,7 @@ document.querySelectorAll(".menu-tabs button").forEach(b => b.addEventListener("
     });
 
     (async function init() {
-      await renderMenu("drinks");
-      await loadGallery();
+      await Promise.all([renderMenu("drinks"), loadGallery(), loadFlyers()]);
       const { data } = await db.auth.getSession();
       if (data?.session) {
         // Do not silently show the admin panel for a session without admin rights.
