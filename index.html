@@ -894,6 +894,55 @@
 @keyframes halloweenRise{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:translateY(6vh)}}
 @media(prefers-reduced-motion:reduce){#halloweenIntro *,#halloweenIntro .intro-content{animation:none!important;transition:none!important}}
 
+
+/* TERAPIA | Painel de gestão */
+#adminModal { padding:14px; }
+#adminModal .modal-box { width:min(1180px,100%); max-height:94dvh; padding:0; border-radius:18px; background:#141414; border:1px solid #3b3429; box-shadow:0 30px 90px #000b; }
+#adminModal .modal-top { padding:22px 28px; background:#1d1b18; border-bottom:1px solid #393227; position:sticky;top:0;z-index:5; }
+#adminModal .modal-top h2 { font:600 clamp(20px,3vw,29px) Georgia,serif; }
+#adminModal .modal-top h2::before { content:'✦ '; color:var(--accent); }
+#adminModal #loginArea { padding:24px 28px; max-width:520px; }
+#adminModal > .modal-box > .small-note { padding:0 28px; }
+#adminModal .admin-content { padding:0 26px 28px; }
+.admin-dashboard-head { padding:24px 0 18px; display:flex; justify-content:space-between; align-items:center;gap:14px;flex-wrap:wrap; }
+.admin-dashboard-head h3 { margin:3px 0 0;font-size:24px;letter-spacing:-.5px; }
+.admin-kicker { color:var(--accent);font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase; }
+.admin-dashboard-head #logout {padding:10px 16px;}
+.admin-stats { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 20px; }
+.admin-stat { border:1px solid #3b3429; background:linear-gradient(135deg,#24211d,#1a1918);border-radius:12px;padding:17px; }
+.admin-stat span { display:block;color:#c5bbad;font-size:12px;margin-bottom:7px; }
+.admin-stat strong { display:block;font-size:29px;color:#f1d09a;line-height:1; }
+.admin-tabs { display:flex;gap:8px;flex-wrap:wrap;border-bottom:1px solid #40392e;padding-bottom:13px;margin-bottom:20px; }
+.admin-tab { border:1px solid #443a2e;border-radius:9px;background:#24211d;color:#d5cbbd;padding:11px 15px;font-size:13px; }
+.admin-tab[aria-selected="true"] { background:var(--accent);border-color:var(--accent);color:#16120e; }
+.admin-panel[hidden] { display:none!important; }
+.admin-panel { animation:adminFade .18s ease; }
+@keyframes adminFade { from {opacity:.6;transform:translateY(3px)} to {opacity:1;transform:none} }
+.admin-panel-title { display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px; }
+.admin-panel-title h3 { margin:0;font-size:21px; }
+.admin-toolbar { display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:14px 0; }
+.admin-toolbar input,.admin-toolbar select { background:#101010;border:1px solid #51483b;border-radius:8px;color:#fff;padding:12px;min-width:0; }
+.admin-toolbar input { flex:1 1 190px; }
+.admin-toolbar select { flex:0 1 190px; }
+.admin-panel .reservation-row { background:#1d1c1a;border:1px solid #39342d;border-radius:11px;padding:16px;margin:9px 0;overflow-wrap:anywhere; }
+.admin-panel .reservation-row strong {font-size:15px;}
+.admin-panel .row-actions button {border-radius:7px;}
+.admin-panel #adminMenuList { max-height:460px;overflow-y:auto;padding-right:4px; }
+.admin-menu-row { display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap; }
+.admin-menu-row .row-actions {margin:0;}
+.admin-menu-meta { color:#b8ac9a;font-size:12px;margin-top:5px; }
+.admin-menu-row .admin-menu-main {flex:1 1 220px;min-width:0;}
+.admin-menu-badge {color:#cbb68d;font-size:11px;border:1px solid #5d4e36;border-radius:50px;padding:4px 8px;display:inline-block;margin-left:7px;}
+.admin-menu-badge.off {color:#aaa;border-color:#555;}
+.admin-pagination {display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:14px 0;}
+.admin-pagination button {padding:9px 13px;}
+.admin-form-card {background:#1b1a18;border:1px solid #39342d;border-radius:12px;padding:18px;margin:18px 0;}
+.admin-form-card summary {cursor:pointer;font-weight:700;color:#f1d09a;list-style-position:inside;padding:4px 0;}
+.admin-form-card form {margin-top:17px;}
+.admin-danger-zone {margin-top:30px;border-top:1px solid #573a34;padding-top:20px;}
+#adminGalleryList .reservation-row {overflow-wrap:anywhere;}
+@media(max-width:650px) {#adminModal {padding:5px;}#adminModal .modal-box {max-height:98dvh;border-radius:12px;}#adminModal .modal-top {padding:15px;}#adminModal .admin-content {padding:0 13px 18px;}#adminModal > .modal-box > .small-note {padding:0 15px;} .admin-stats {gap:7px;} .admin-stat {padding:12px 9px;} .admin-stat strong {font-size:23px;} .admin-stat span {font-size:11px;} .admin-tabs {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));} .admin-tab {padding:11px 8px;} .admin-form-card {padding:12px;} .admin-panel #adminMenuList {max-height:55dvh;} }
+
 </style>
 
 
@@ -1180,73 +1229,52 @@
       </div>
 
        <div class="admin-content" id="adminContent">
-        <hr style="border-color:#38332b;margin:25px 0">
-        <h3>Notificações de reservas 🔔</h3>
-        <p class="small-note">Ative as notificações neste dispositivo para receber avisos quando o envio automático estiver configurado.</p>
-        <div class="onesignal-customlink-container"></div>
-
-
-          <div class="admin-tools"><input id="reservationSearch" placeholder="Buscar por nome, data ou telefone"><button
-            class="btn btn-outline" id="exportReservations">Exportar CSV</button><button class="btn btn-outline"
-            id="logout">Sair</button></div>
-
-          <h3>Reservas recebidas</h3>
-        <p class="small-note">As solicitações ficam salvas no banco de dados e aparecem nos dispositivos autorizados.
-        </p>
-        <div id="reservationList"></div>
-        <hr style="border-color:#38332b;margin:25px 0">
-        <h3>Editar cardápio</h3>
-        <p class="small-note">Cadastre ou edite os itens reais do cardápio. Categorias: drinks, cervejas, comidas,
-          combos.</p>
-        <form id="menuForm"><input type="hidden" id="menuId">
-          <div class="field"><label for="menuName">Nome do item</label><input id="menuName" required maxlength="100">
-          </div>
-          <div class="field"><label for="menuDescription">Descrição</label><input id="menuDescription" maxlength="250">
-          </div>
-          <div class="formgrid">
-            <div class="field"><label for="menuPrice">Preço (ex.: R$ 29,00)</label><input id="menuPrice" required
-                maxlength="30"></div>
-            <div class="field"><label for="menuCategory">Categoria</label><select id="menuCategory">
-                <option value="drinks">Drinks</option>
-                <option value="cervejas">Cervejas</option>
-                <option value="comidas">Para comer</option>
-                <option value="combos">Combos</option>
-                <option value="diversos">Diversos</option>
-              </select></div><div class="field">
-  <label for="menuProductPhotos">Fotos do produto</label>
-  <input
-    type="file"
-    id="menuProductPhotos"
-    accept="image/*"
-    multiple
-  >
-  <small>Você pode selecionar várias imagens de uma vez.</small>
-</div>
-          </div><button class="btn btn-primary" type="submit">Salvar item</button> <button class="btn btn-outline"
-            type="button" id="cancelMenuEdit">Limpar formulário</button>
-        </form>
-        <div id="adminMenuList"></div>
-
-         
-        <hr style="border-color:#38332b;margin:25px 0">
-        <h3>Personalizar a galeria</h3>
-        <p class="small-note">Escolha uma foto do computador/celular para enviar ao Supabase ou informe uma URL pública
-          HTTPS.</p>
-
-          <form id="photoForm">
-          <div class="field"><label for="photoFile">Arquivo da foto</label><input id="photoFile" type="file"
-              accept="image/*"></div>
-          <div class="field"><label for="photoUrl">Ou URL pública da imagem</label><input id="photoUrl" type="url"
-              placeholder="https://..."></div>
-          <div class="field"><label for="photoCaption">Legenda</label><input id="photoCaption"
-              placeholder="Ex.: Nossa área externa"></div><button class="btn btn-primary" type="submit">Enviar foto para
-            a galeria</button>
-        </form>
-        <div id="adminGalleryList"></div>
-        <div class="row-actions"><button class="btn btn-outline" id="resetGallery">Restaurar galeria de
-            exemplo</button><button class="btn danger" id="clearReservations">Apagar todas as reservas</button></div>
-
-         
+         <div class="admin-dashboard-head"><div><div class="admin-kicker">TERAPIA BAR · Gestão</div><h3>Visão geral do bar</h3></div><button class="btn btn-outline" id="logout" type="button">Sair da conta</button></div>
+        <div class="admin-stats" aria-label="Resumo do painel">
+          <div class="admin-stat"><span>Reservas registradas</span><strong id="statReservations">—</strong></div>
+          <div class="admin-stat"><span>Reservas pendentes</span><strong id="statPending">—</strong></div>
+          <div class="admin-stat"><span>Itens no cardápio</span><strong id="statProducts">—</strong></div>
+        </div>
+        <div class="admin-tabs" role="tablist" aria-label="Seções do painel">
+          <button type="button" class="admin-tab" data-admin-tab="reservas" role="tab" aria-selected="true">📅 Reservas</button>
+          <button type="button" class="admin-tab" data-admin-tab="cardapio" role="tab" aria-selected="false">🍸 Cardápio</button>
+          <button type="button" class="admin-tab" data-admin-tab="galeria" role="tab" aria-selected="false">🖼️ Galeria</button>
+          <button type="button" class="admin-tab" data-admin-tab="config" role="tab" aria-selected="false">⚙️ Configurações</button>
+        </div>
+        <section class="admin-panel" id="adminPanel-reservas" role="tabpanel">
+          <div class="admin-panel-title"><h3>Reservas recebidas</h3><button class="btn btn-outline" id="exportReservations" type="button">Exportar CSV</button></div>
+          <p class="small-note">Consulte as solicitações, confirme ou cancele reservas e entre em contato pelo WhatsApp.</p>
+          <div class="admin-toolbar"><input id="reservationSearch" aria-label="Buscar reservas" placeholder="Buscar por nome, data ou telefone"></div>
+          <div id="reservationList"></div>
+        </section>
+        <section class="admin-panel" id="adminPanel-cardapio" role="tabpanel" hidden>
+          <div class="admin-panel-title"><h3>Gerenciar cardápio</h3><button type="button" class="btn btn-primary" id="adminNewProduct">+ Novo produto</button></div>
+          <p class="small-note">Encontre produtos rapidamente, filtre por categoria e edite apenas o item desejado.</p>
+          <div class="admin-toolbar"><input id="adminProductSearch" placeholder="Pesquisar produto pelo nome..." aria-label="Pesquisar produto"><select id="adminProductCategory" aria-label="Filtrar categoria"><option value="all">Todas as categorias</option><option value="drinks">Drinks</option><option value="cervejas">Cervejas</option><option value="comidas">Para comer</option><option value="combos">Combos</option><option value="diversos">Diversos</option><option value="semalcool">Sem álcool</option></select><select id="adminProductStatus" aria-label="Filtrar situação"><option value="all">Todos os status</option><option value="active">Ativos</option><option value="inactive">Ocultos</option></select></div>
+          <div id="adminMenuList"></div>
+          <div class="admin-pagination"><span class="small-note" id="adminProductPageInfo"></span><div class="row-actions"><button type="button" class="btn btn-outline" id="adminProductPrev">Anterior</button><button type="button" class="btn btn-outline" id="adminProductNext">Próxima</button></div></div>
+          <details class="admin-form-card" id="adminProductEditor"><summary>+ Cadastrar ou editar produto</summary>
+            <form id="menuForm"><input type="hidden" id="menuId">
+              <div class="field"><label for="menuName">Nome do item</label><input id="menuName" required maxlength="100"></div>
+              <div class="field"><label for="menuDescription">Descrição</label><input id="menuDescription" maxlength="250"></div>
+              <div class="formgrid"><div class="field"><label for="menuPrice">Preço (ex.: R$ 29,00)</label><input id="menuPrice" required maxlength="30"></div>
+              <div class="field"><label for="menuCategory">Categoria</label><select id="menuCategory"><option value="drinks">Drinks</option><option value="cervejas">Cervejas</option><option value="comidas">Para comer</option><option value="combos">Combos</option><option value="diversos">Diversos</option></select></div>
+              <div class="field"><label for="menuProductPhotos">Fotos do produto</label><input type="file" id="menuProductPhotos" accept="image/*" multiple><small>Você pode selecionar várias imagens de uma vez.</small></div></div>
+              <button class="btn btn-primary" type="submit">Salvar item</button> <button class="btn btn-outline" type="button" id="cancelMenuEdit">Limpar formulário</button>
+            </form>
+          </details>
+        </section>
+        <section class="admin-panel" id="adminPanel-galeria" role="tabpanel" hidden>
+          <div class="admin-panel-title"><h3>Galeria de fotos</h3></div><p class="small-note">Adicione imagens do ambiente, eventos e momentos do TERAPIA.</p>
+          <div class="admin-form-card"><form id="photoForm"><div class="field"><label for="photoFile">Arquivo da foto</label><input id="photoFile" type="file" accept="image/*"></div><div class="field"><label for="photoUrl">Ou URL pública da imagem</label><input id="photoUrl" type="url" placeholder="https://..."></div><div class="field"><label for="photoCaption">Legenda</label><input id="photoCaption" placeholder="Ex.: Nossa área externa"></div><button class="btn btn-primary" type="submit">Enviar foto para a galeria</button></form></div>
+          <div id="adminGalleryList"></div><div class="row-actions"><button class="btn btn-outline" type="button" id="resetGallery">Restaurar galeria de exemplo</button></div>
+        </section>
+        <section class="admin-panel" id="adminPanel-config" role="tabpanel" hidden>
+          <div class="admin-panel-title"><h3>Notificações de reservas 🔔</h3></div>
+          <p class="small-note">Ative as notificações neste dispositivo para receber avisos de novas reservas. Cada aparelho precisa permitir notificações individualmente.</p>
+          <div class="onesignal-customlink-container"></div>
+          <div class="admin-danger-zone"><h3>Zona de cuidado</h3><p class="small-note">A operação abaixo exclui todas as reservas e não pode ser desfeita.</p><button class="btn danger" type="button" id="clearReservations">Apagar todas as reservas</button></div>
+        </section>
       </div>
 
     </div>
@@ -1605,6 +1633,8 @@ document.querySelectorAll(".menu-tabs button").forEach(b => b.addEventListener("
         $("#reservationList").innerHTML = '<p class="empty">Não foi possível carregar as reservas. Confira as políticas de acesso do Supabase.</p>';
         return;
       }
+      $("#statReservations").textContent = (data || []).length;
+      $("#statPending").textContent = (data || []).filter(r => r.status === "Pendente").length;
       const filtered = (data || []).filter(r => [r.name, r.phone, r.reservation_date, r.reservation_time, r.reservation_type, r.status].join(" ").toLowerCase().includes(q));
       $("#reservationList").innerHTML = filtered.length ? filtered.map(r => `<div class="reservation-row"><strong>${esc(r.name)}</strong> · ${esc(r.status)}<p class="small-note">📅 ${esc(r.reservation_date)} às ${esc(String(r.reservation_time || "").slice(0, 5))} · 👥 ${esc(r.people)} · ${esc(r.reservation_type)}<br>📱 WhatsApp: ${esc(r.phone)}${r.notes ? `<br>Observações: ${esc(r.notes)}` : ""}</p><div class="row-actions"><button class="btn btn-outline" onclick="openReservationWhatsApp('${encodeURIComponent(JSON.stringify({name:r.name,phone:r.phone,reservation_date:r.reservation_date,reservation_time:r.reservation_time,people:r.people,reservation_type:r.reservation_type,notes:r.notes,status:r.status})).replace(/'/g, "%27")}')">Chamar no WhatsApp</button><button class="btn btn-outline" onclick="setStatus(${Number(r.id)},'Confirmada')">Marcar confirmada</button><button class="btn btn-outline" onclick="setStatus(${Number(r.id)},'Cancelada')">Cancelar</button><button class="btn danger" onclick="deleteReservation(${Number(r.id)})">Excluir</button></div></div>`).join("") : '<p class="empty">Nenhuma reserva encontrada.</p>';
     }
@@ -1684,8 +1714,40 @@ document.querySelectorAll(".menu-tabs button").forEach(b => b.addEventListener("
       const { data, error } = await db.from("menu_items").select("*").order("position", { ascending: true });
       if (error) { $("#adminMenuList").innerHTML = '<p class="empty">Erro ao carregar o cardápio.</p>'; return; }
       menuRows = data || [];
-      $("#adminMenuList").innerHTML = menuRows.length ? menuRows.map(i => `<div class="reservation-row"><strong>${esc(i.name)}</strong> · ${esc(i.price)} · ${esc(i.category)} · ${i.active ? "Ativo" : "Oculto"}<p class="small-note">${esc(i.description || "")}</p><div class="row-actions"><button class="btn btn-outline" onclick="editMenuItem(${Number(i.id)})">Editar</button><button class="btn btn-outline" onclick="toggleMenuItem(${Number(i.id)},${!i.active})">${i.active ? "Ocultar" : "Ativar"}</button><button class="btn danger" onclick="deleteMenuItem(${Number(i.id)})">Excluir</button></div></div>`).join("") : '<p class="empty">Ainda não há produtos cadastrados no cardápio.</p>';
+      renderAdminProducts();
     }
+
+    // Painel administrativo: abas, busca, filtros e paginação de produtos.
+    let adminProductPage = 0;
+    const ADMIN_PAGE_SIZE = 8;
+    function openAdminTab(tab) {
+      document.querySelectorAll("[data-admin-tab]").forEach(b => b.setAttribute("aria-selected", String(b.dataset.adminTab === tab)));
+      document.querySelectorAll(".admin-panel").forEach(p => { p.hidden = p.id !== `adminPanel-${tab}`; });
+    }
+    document.querySelectorAll("[data-admin-tab]").forEach(b => b.addEventListener("click", () => openAdminTab(b.dataset.adminTab)));
+    function renderAdminProducts() {
+      const search = ($("#adminProductSearch").value || "").trim().toLocaleLowerCase("pt-BR");
+      const cat = $("#adminProductCategory").value;
+      const status = $("#adminProductStatus").value;
+      const rows = menuRows.filter(i => (cat === "all" || i.category === cat) &&
+        (status === "all" || Boolean(i.active) === (status === "active")) &&
+        (!search || String(i.name || "").toLocaleLowerCase("pt-BR").includes(search)));
+      const pages = Math.max(1, Math.ceil(rows.length / ADMIN_PAGE_SIZE));
+      adminProductPage = Math.min(adminProductPage, pages - 1);
+      const visible = rows.slice(adminProductPage * ADMIN_PAGE_SIZE, (adminProductPage + 1) * ADMIN_PAGE_SIZE);
+      $("#adminMenuList").innerHTML = visible.length ? visible.map(i => `<div class="reservation-row admin-menu-row"><div class="admin-menu-main"><strong>${esc(i.name)}</strong><span class="admin-menu-badge ${i.active ? "" : "off"}">${i.active ? "Ativo" : "Oculto"}</span><div class="admin-menu-meta">${esc(i.price)} · ${esc(i.category)}</div><p class="small-note">${esc(i.description || "")}</p></div><div class="row-actions"><button class="btn btn-outline" onclick="editMenuItem(${Number(i.id)})">Editar</button><button class="btn btn-outline" onclick="toggleMenuItem(${Number(i.id)},${!i.active})">${i.active ? "Ocultar" : "Ativar"}</button><button class="btn danger" onclick="deleteMenuItem(${Number(i.id)})">Excluir</button></div></div>`).join("") : '<p class="empty">Nenhum produto encontrado para estes filtros.</p>';
+      $("#adminProductPageInfo").textContent = `${rows.length} produto(s) · Página ${adminProductPage + 1} de ${pages}`;
+      $("#adminProductPrev").disabled = adminProductPage === 0;
+      $("#adminProductNext").disabled = adminProductPage >= pages - 1;
+      $("#statProducts").textContent = menuRows.length;
+    }
+    ["#adminProductSearch", "#adminProductCategory", "#adminProductStatus"].forEach(sel => {
+      $(sel).addEventListener(sel === "#adminProductSearch" ? "input" : "change", () => { adminProductPage = 0; renderAdminProducts(); });
+    });
+    $("#adminProductPrev").addEventListener("click", () => { adminProductPage = Math.max(0, adminProductPage - 1); renderAdminProducts(); });
+    $("#adminProductNext").addEventListener("click", () => { adminProductPage++; renderAdminProducts(); });
+    $("#adminNewProduct").addEventListener("click", () => { $("#menuForm").reset(); $("#menuId").value = ""; $("#adminProductEditor").open = true; $("#menuName").focus(); });
+
     $("#menuForm").addEventListener("submit", async e => {
       e.preventDefault();
       const formElement = e.currentTarget;
@@ -1771,6 +1833,7 @@ document.querySelectorAll(".menu-tabs button").forEach(b => b.addEventListener("
 
         formElement.reset();
         $("#menuId").value = "";
+        $("#adminProductEditor").open = false;
         await Promise.all([loadAdminMenu(), renderMenu(currentCat)]);
         alert("Produto salvo com sucesso!");
       } catch (error) {
@@ -1790,6 +1853,8 @@ document.querySelectorAll(".menu-tabs button").forEach(b => b.addEventListener("
       $("#menuDescription").value = i.description || "";
       $("#menuPrice").value = i.price || "";
       $("#menuCategory").value = i.category || "drinks";
+      openAdminTab("cardapio");
+      $("#adminProductEditor").open = true;
       $("#menuForm").scrollIntoView({ behavior: "smooth", block: "center" });
     };
     window.toggleMenuItem = async (id, active) => {
