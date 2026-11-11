@@ -1923,10 +1923,15 @@ document.querySelectorAll(".menu-tabs button").forEach(b => b.addEventListener("
     async function loadGallery() {
       const { data, error } = await db.from("gallery_images").select("*").order("position", { ascending: true });
       const gallery = $("#gallery");
-      if (!error && data && data.length) {
-        gallery.querySelectorAll(".slide").forEach(slide => slide.remove());
-        gallery.insertAdjacentHTML("beforeend", galleryData.map(p => `<div class="slide"><img src="${esc(p.image_url)}" alt="${esc(p.caption || "TERAPIA Bar")}" loading="lazy"><div class="slide-label">${esc(p.caption || "TERAPIA Bar")}</div></div>`).join(""));
+      if (error) {
+        console.error("Erro ao carregar galeria:", error);
+      } else {
+        const galleryData = (data || []).filter(p => !String(p.caption || "").startsWith("[FLYER] "));
         galleryRows = galleryData;
+        if (galleryData.length) {
+          gallery.querySelectorAll(".slide").forEach(slide => slide.remove());
+          gallery.insertAdjacentHTML("beforeend", galleryData.map(p => `<div class="slide"><img src="${esc(p.image_url)}" alt="${esc(p.caption || "TERAPIA Bar")}" loading="lazy"><div class="slide-label">${esc(p.caption || "TERAPIA Bar")}</div></div>`).join(""));
+        }
       }
       initGallerySlider();
     }
