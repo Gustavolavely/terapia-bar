@@ -1976,7 +1976,7 @@ document.querySelectorAll(".menu-tabs button").forEach(b => b.addEventListener("
         alert("Flyer publicado no site!");
       } catch(error) {
         console.error("Erro ao publicar flyer:",error);
-        alert("Não foi possível publicar o flyer. Verifique as permissões do Supabase.");
+      alert("Erro ao publicar flyer: " + (error.message || JSON.stringify(error)));
       } finally { button.disabled=false; button.textContent="Publicar flyer"; }
     });
     window.deleteFlyer = async id => {
