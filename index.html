@@ -1971,7 +1971,7 @@ document.querySelectorAll(".menu-tabs button").forEach(b => b.addEventListener("
         const url = db.storage.from("terapia-fotos").getPublicUrl(path).data.publicUrl;
         const {error:saveError} = await db.from("gallery_images").insert({image_url:url,caption:"[FLYER] "+title,position:Date.now()});
         if (saveError) throw saveError;
-        e.currentTarget.reset();
+        document.querySelector("#flyerForm").reset();
         await loadFlyers();
         alert("Flyer publicado no site!");
       } catch(error) {
