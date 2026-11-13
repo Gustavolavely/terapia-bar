@@ -2014,7 +2014,7 @@ document.querySelectorAll(".menu-tabs button").forEach(b => b.addEventListener("
       btn.disabled = false;
       btn.textContent = "Enviar foto para a galeria";
       if (error) { alert("A foto foi enviada, mas não foi possível registrá-la na galeria. Confira as permissões da tabela."); return; }
-      e.currentTarget.reset();
+      document.querySelector("#flyerForm").reset();
       await Promise.all([loadGallery(), loadAdminGallery(), loadFlyers()]);
     });
     window.deleteGalleryPhoto = async id => {
