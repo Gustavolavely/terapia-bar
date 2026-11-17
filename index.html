@@ -1176,8 +1176,20 @@
                <div class="field"><label for="date">Data *</label><input id="date" name="date" type="date" required>
             </div>
 
-               <div class="field"><label for="time">Horário desejado *</label><input id="time" name="time" type="time"
-                required></div>
+               <div class="field"><label for="time">Horário desejado *</label><select id="time" name="time" required>
+                  <option value="">Selecione um horário</option>
+                  <option value="19:00">19:00</option>
+                  <option value="19:30">19:30</option>
+                  <option value="20:00">20:00</option>
+                  <option value="20:30">20:30</option>
+                  <option value="21:00">21:00</option>
+                  <option value="21:30">21:30</option>
+                  <option value="22:00">22:00</option>
+                  <option value="22:30">22:30</option>
+                  <option value="23:00">23:00</option>
+                  <option value="23:30">23:30</option>
+                  <option value="00:00">00:00</option>
+                </select></div>
 
                <div class="field"><label for="people">Quantidade de pessoas *</label><select id="people" name="people"
                 required>
@@ -1575,6 +1587,16 @@ document.querySelectorAll(".menu-tabs button").forEach(b => b.addEventListener("
       btn.disabled = true;
       btn.textContent = "Enviando...";
       const form = Object.fromEntries(new FormData(e.currentTarget).entries());
+      const allowedTimes = new Set(["19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00", "23:30", "00:00"]);
+      if (!allowedTimes.has(form.time)) {
+        btn.disabled = false;
+        btn.textContent = "Enviar solicitação de reserva ↗";
+        notice.style.display = "block";
+        notice.style.borderColor = "#8a4b42";
+        notice.style.background = "#2b1b19";
+        notice.textContent = "Escolha um horário entre 19:00 e 00:00, de 30 em 30 minutos.";
+        return;
+      }
       const record = {
         name: form.name.trim(),
         phone: form.phone.trim(),
@@ -1594,7 +1616,7 @@ document.querySelectorAll(".menu-tabs button").forEach(b => b.addEventListener("
         notice.style.borderColor = "#8a4b42";
         notice.style.background = "#2b1b19";
       } else {
-        document.querySelector("#menuForm").reset();
+        document.querySelector("#reservationForm").reset();
         dateInput.min = new Date().toISOString().slice(0, 10);
         notice.style.borderColor = "#53734d";
         notice.style.background = "#1b2a1a";
